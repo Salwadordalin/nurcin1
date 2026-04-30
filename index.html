@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurçin | 6 Mayıs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Dancing+Script:wght@600&family=Lora:ital,wght@1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --spotify-green: #1DB954;
+            --spotify-black: #191414;
+            --spotify-gray: #b3b3b3;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body, html {
+            height: 100vh;
+            width: 100%;
+            background-color: var(--spotify-black);
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; 
+            position: relative;
+        }
+
+        .stars-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        #intro-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 2s ease;
+        }
+
+        .intro-text {
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            text-align: center;
+            opacity: 0;
+            animation: softFadeInOut 5s forwards;
+            padding: 20px;
+            letter-spacing: 2px;
+            z-index: 1001;
+        }
+
+        @keyframes softFadeInOut {
+            0% { opacity: 0; transform: translateY(30px); filter: blur(8px); }
+            30% { opacity: 1; transform: translateY(0); filter: blur(0); }
+            70% { opacity: 1; transform: translateY(0); filter: blur(0); }
+            100% { opacity: 0; transform: translateY(-30px); filter: blur(8px); }
+        }
+
+        /* Konteynırı dikeyde daha dengeli hale getirdim */
+        .container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 95%;
+            max-width: 380px;
+            height: 100vh;
+            padding: 10px 0;
+            gap: 10px; /* Elemanlar arası boşluk */
+            animation: appFadeIn 2s forwards;
+            z-index: 10;
+        }
+
+        @keyframes appFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .player-card {
+            background: linear-gradient(to bottom, #333333, #121212);
+            width: 100%;
+            padding: 1.2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+            flex-shrink: 1; /* Ekran küçüldüğünde kartın küçülmesine izin verir */
+        }
+
+        .album-art {
+            width: 100%;
+            height: clamp(180px, 30vh, 240px); /* Ekran boyuna göre otomatik ayarlanır */
+            margin-bottom: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #282828;
+        }
+
+        .album-art img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            object-position: 50% 20%; 
+        }
+
+        .info h1 { font-size: 1.2rem; font-weight: 700; margin-bottom: 2px; }
+        .info p { color: var(--spotify-gray); font-size: 0.85rem; margin-bottom: 12px;}
+
+        .progress-area { width: 100%; margin-bottom: 12px; }
+        .bar-container { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 5px; margin-bottom: 8px; cursor: pointer; }
+        .progress-bar { height: 100%; width: 0%; background: white; border-radius: 5px; }
+        .time { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--spotify-gray); }
+
+        .controls { display: flex; justify-content: center; }
+        .play-pause {
+            width: 50px; height: 50px; background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: black; font-size: 1rem; border: none; cursor: pointer;
+        }
+
+        .lyrics-box {
+            width: 100%;
+            height: 60px; /* Mesajların birbirine girmemesi için sabit yükseklik */
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .lyric {
+            position: absolute;
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0;
+            display: none;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .lyric.animate { display: block; animation: softFadeInOut 6s forwards; }
+
+        .love-letter {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .love-letter p {
+            font-family: 'Lora', serif;
+            font-size: clamp(0.75rem, 3.5vw, 0.85rem); /* Metin boyutu esnek */
+            line-height: 1.4;
+            color: #f1f1f1;
+            font-style: italic;
+        }
+
+        .personal-note {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.1rem;
+            color: var(--spotify-gray);
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container" id="stars"></div>
+
+    <div id="intro-screen">
+        <div class="intro-text">Doğum Günün Kutlu Olsun <br> Nice beraber geçireceğimiz senelerin umuduyla :)</div>
+    </div>
+
+    <div class="container" id="main-content">
+        <div class="player-card">
+            <div class="album-art">
+                <img src="kapak.jpg" alt="Araftayım">
+            </div>
+            <div class="info">
+                <h1>Araftayım</h1>
+                <p>Ebru Gündeş</p>
+            </div>
+            <div class="progress-area">
+                <div class="bar-container" id="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <div class="time">
+                    <span id="current-time">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="play-pause" id="masterPlay"><i class="fas fa-play" id="play-icon"></i></button>
+            </div>
+        </div>
+
+        <div class="lyrics-box" id="lyrics-box">
+            <div class="lyric">"Nedeni bilinseydi kimse aşık olamazdı."</div>
+            <div class="lyric">"Kalbimdeki yerin, hiçbir zaman kimsenin ulaşamayacağı kadar derin ve sadece sana özel."</div>
+            <div class="lyric">"Yollar ne kadar uzun olursa olsun, sonunda senin elini tutacağımı bilmek her şeye değer."</div>
+            <div class="lyric">"Kalbimdeki yerin sabit, rotam hep senin olduğun yer; iyi ki benimlesin."</div>
+            <div class="lyric">"İyi ki hayatımdasın Nurçin."</div>
+            <div class="lyric">"Nice mutlu yaşlarına :)"</div>
+        </div>
+
+        <div class="love-letter">
+            <p>
+                "Bazı insanlar sadece hayatından geçer, bazıları ise hayatının ta kendisi olur. Sen benim hem yolumsun hem de o yolun sonundaki huzurum. Aradan ne kadar zaman geçerse geçsin, sana olan inadım da sevgim de hep ilk günkü gibi taze. Seninle el ele verip tüm engelleri aşacağımıza inanıyorum. Nice mutlu yaşlarına, hep yanımda, hep sol yanımda ol."
+            </p>
+        </div>
+
+        <div class="personal-note">
+            — Mansur'dan Sevgilerle
+        </div>
+    </div>
+
+    <audio id="main-audio" src="araftayim.mp3"></audio>
+
+    <script>
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 2 + 'px';
+            star.style.width = size; star.style.height = size;
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+            starsContainer.appendChild(star);
+        }
+
+        const intro = document.getElementById('intro-screen');
+        const main = document.getElementById('main-content');
+        const audio = document.getElementById('main-audio');
+        const playBtn = document.getElementById('masterPlay');
+        const playIcon = document.getElementById('play-icon');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const lyrics = document.querySelectorAll('.lyric');
+
+        let isFirstPlay = true;
+
+        setTimeout(() => {
+            intro.style.opacity = '0';
+            setTimeout(() => { 
+                intro.style.display = 'none'; 
+                main.style.display = 'flex'; 
+            }, 2000);
+        }, 5000);
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                if (isFirstPlay) {
+                    audio.currentTime = 61;
+                    isFirstPlay = false;
+                }
+                audio.play();
+                playIcon.classList.replace('fa-play', 'fa-pause');
+                startLyricShow();
+            } else {
+                audio.pause();
+                playIcon.classList.replace('fa-pause', 'fa-play');
+            }
+        });
+
+        audio.addEventListener('timeupdate', (e) => {
+            const { currentTime, duration } = e.target;
+            if (isNaN(duration)) return;
+            progressBar.style.width = `${(currentTime / duration) * 100}%`;
+            document.getElementById('current-time').innerText = formatTime(currentTime);
+            document.getElementById('duration').innerText = formatTime(duration);
+        });
+
+        function formatTime(time) {
+            let m = Math.floor(time / 60), s = Math.floor(time % 60);
+            return `${m}:${s < 10 ? '0' + s : s}`;
+        }
+
+        progressContainer.addEventListener('click', (e) => {
+            audio.currentTime = (e.offsetX / progressContainer.clientWidth) * audio.duration;
+            isFirstPlay = false;
+        });
+
+        let lyricIndex = 0;
+        function startLyricShow() {
+            if (lyricIndex >= lyrics.length || audio.paused) return;
+            const currentLyric = lyrics[lyricIndex];
+            currentLyric.classList.add('animate');
+            setTimeout(() => {
+                currentLyric.classList.remove('animate');
+                lyricIndex++;
+                if (!audio.paused) startLyricShow();
+            }, 6000); 
+        }
+    </script>
+</body>
+</html>
