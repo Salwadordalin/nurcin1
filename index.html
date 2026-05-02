@@ -31,16 +31,11 @@
 
         /* Arka Plan Yıldızlar */
         .stars-container {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
         }
         .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.5;
+            position: absolute; background: white; border-radius: 50%; opacity: 0.5;
             animation: twinkle var(--duration) infinite ease-in-out;
         }
         @keyframes twinkle {
@@ -50,24 +45,15 @@
 
         /* Giriş Ekranı */
         #intro-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            transition: opacity 2s ease;
-            cursor: pointer;
-            text-align: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: black; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 1000;
+            transition: opacity 2s ease; cursor: pointer; text-align: center;
         }
 
         .intro-text {
             font-size: clamp(1.1rem, 4.5vw, 1.6rem);
-            line-height: 1.6;
-            padding: 30px;
-            letter-spacing: 1px;
+            line-height: 1.6; padding: 30px; letter-spacing: 1px;
             animation: softPulse 3s infinite ease-in-out;
         }
 
@@ -77,37 +63,23 @@
         }
 
         .container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 95%;
-            max-width: 380px;
-            height: 100vh;
-            gap: 12px;
-            animation: appFadeIn 2s forwards;
-            z-index: 10;
+            display: none; flex-direction: column; align-items: center;
+            justify-content: center; width: 95%; max-width: 380px;
+            height: 100vh; gap: 12px; animation: appFadeIn 2s forwards; z-index: 10;
         }
 
         @keyframes appFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .player-card {
             background: linear-gradient(to bottom, #333333, #121212);
-            width: 100%;
-            padding: 1.2rem;
-            border-radius: 20px;
+            width: 100%; padding: 1.2rem; border-radius: 20px;
             box-shadow: 0 15px 50px rgba(0,0,0,0.8);
         }
 
         .album-art {
-            width: 100%;
-            height: clamp(160px, 25vh, 210px);
-            margin-bottom: 15px;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #282828;
+            width: 100%; height: clamp(160px, 25vh, 210px); margin-bottom: 15px;
+            border-radius: 12px; overflow: hidden; background: #282828;
         }
-
         .album-art img { width: 100%; height: 100%; object-fit: cover; }
 
         .info h1 { font-size: 1.2rem; font-weight: 700; margin-bottom: 2px; }
@@ -125,49 +97,51 @@
             color: black; border: none; cursor: pointer;
         }
 
-        /* Şarkı Sözü Alanı */
-        .lyrics-box { width: 100%; height: 60px; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .lyric { position: absolute; font-size: 0.9rem; font-weight: 600; opacity: 0; display: none; width: 100%; padding: 0 10px; }
-        .lyric.animate { display: block; animation: softFadeInOut 6s forwards; }
+        /* SOS Butonu */
+        #sos-btn {
+            position: fixed; bottom: 20px; right: 20px; background: var(--accent-red);
+            width: 60px; height: 60px; border-radius: 50%; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 1001; box-shadow: 0 0 20px rgba(255, 71, 87, 0.6);
+            animation: sos-pulse 2s infinite;
+        }
+        #sos-btn i { font-size: 1.5rem; color: white; }
+        #sos-btn span { font-size: 0.6rem; font-weight: bold; margin-top: 2px; }
 
-        @keyframes softFadeInOut {
-            0% { opacity: 0; transform: translateY(15px); filter: blur(5px); }
-            20% { opacity: 1; transform: translateY(0); filter: blur(0); }
-            80% { opacity: 1; transform: translateY(0); filter: blur(0); }
-            100% { opacity: 0; transform: translateY(-15px); filter: blur(5px); }
+        @keyframes sos-pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(255, 71, 87, 0); }
+            100% { transform: scale(1); }
+        }
+
+        /* SOS Paneli */
+        #sos-panel {
+            position: fixed; bottom: 90px; right: 20px; width: 280px;
+            background: #1a1a1a; border: 2px solid var(--accent-red);
+            border-radius: 15px; padding: 15px; display: none; z-index: 1002;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideIn 0.3s ease;
+        }
+        #sos-panel h3 { font-size: 1rem; color: var(--accent-red); margin-bottom: 10px; }
+        #sos-panel p { font-size: 0.75rem; color: var(--spotify-gray); margin-bottom: 10px; }
+        #sos-panel textarea {
+            width: 100%; height: 80px; background: #333; border: none; border-radius: 8px;
+            color: white; padding: 10px; font-family: inherit; font-size: 0.8rem; resize: none; margin-bottom: 10px;
+        }
+        #sos-panel button {
+            width: 100%; padding: 10px; background: var(--accent-red); border: none;
+            border-radius: 8px; color: white; font-weight: bold; cursor: pointer; margin-bottom: 5px;
         }
 
         /* Zaman Kapsülü Paneli */
         .capsule-section {
-            width: 100%;
-            background: rgba(255, 71, 87, 0.08);
-            border: 1px solid rgba(255, 71, 87, 0.2);
-            border-radius: 18px;
-            padding: 15px;
-            text-align: center;
-            backdrop-filter: blur(8px);
+            width: 100%; background: rgba(255, 71, 87, 0.08); border: 1px solid rgba(255, 71, 87, 0.2);
+            border-radius: 18px; padding: 15px; text-align: center; backdrop-filter: blur(8px);
         }
         .capsule-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-red); margin-bottom: 5px; font-weight: bold; }
         #timer { font-family: monospace; font-size: 1.2rem; font-weight: bold; margin: 5px 0; color: white; }
-        .capsule-desc { font-size: 0.7rem; color: var(--spotify-gray); line-height: 1.4; margin-top: 4px; }
         
-        .future-btn {
-            display: none;
-            margin-top: 10px;
-            padding: 10px 25px;
-            background: var(--accent-red);
-            border: none;
-            color: white;
-            border-radius: 25px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
-        }
-
-        /* Alt Yazılar */
         .love-letter { width: 100%; text-align: center; padding: 5px; }
         .love-letter p { font-family: 'Lora', serif; font-size: 0.8rem; line-height: 1.4; color: #f1f1f1; font-style: italic; }
-        .personal-note { font-family: 'Dancing Script', cursive; font-size: 1.2rem; color: var(--spotify-gray); margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -184,47 +158,42 @@
 
     <div class="container" id="main-content">
         <div class="player-card">
-            <div class="album-art">
-                <img src="kapak.jpg" alt="Araftayım">
-            </div>
-            <div class="info">
-                <h1>Araftayım</h1>
-                <p>Ebru Gündeş</p>
-            </div>
+            <div class="album-art"><img src="kapak.jpg" alt="Araftayım"></div>
+            <div class="info"><h1>Araftayım</h1><p>Ebru Gündeş</p></div>
             <div class="progress-area">
-                <div class="bar-container" id="progress-container">
-                    <div class="progress-bar" id="progress-bar"></div>
-                </div>
-                <div class="time">
-                    <span id="current-time">0:00</span>
-                    <span id="duration">0:00</span>
-                </div>
+                <div class="bar-container" id="progress-container"><div class="progress-bar" id="progress-bar"></div></div>
+                <div class="time"><span id="current-time">0:00</span><span id="duration">0:00</span></div>
             </div>
             <div class="controls">
                 <button class="play-pause" id="masterPlay"><i class="fas fa-play" id="play-icon"></i></button>
             </div>
         </div>
 
-        <div class="lyrics-box" id="lyrics-box">
-            <div class="lyric">"Nedeni bilinseydi kimse aşık olamazdı."</div>
-            <div class="lyric">"Kalbimdeki yerin, hiçbir zaman kimsenin ulaşamayacağı kadar derin..."</div>
-            <div class="lyric">"Yollar ne kadar uzun olursa olsun, sonunda senin elini tutmak her şeye değer."</div>
-            <div class="lyric">"İyi ki hayatımdasın Nurçin."</div>
-            <div class="lyric">"Nice mutlu yaşlarına :)"</div>
-        </div>
-
         <div class="capsule-section">
             <div class="capsule-title">⏳ Geleceğe Not</div>
             <div id="timer">Yükleniyor...</div>
-            <div class="capsule-desc">Bu bölme 6. ayımızı doldurduğumuzda <br> kendiliğinden sana açılacak...</div>
-            <button id="future-btn" class="future-btn" onclick="playFutureAudio()">Geriye Kalan Notu Dinle 🔓</button>
+            <button id="future-btn" style="display:none; padding:10px; background:#ff4757; border:none; color:white; border-radius:20px; cursor:pointer;" onclick="playFutureAudio()">Geriye Kalan Notu Dinle 🔓</button>
         </div>
 
         <div class="love-letter">
             <p>"Sen benim hem yolumsun hem de o yolun sonundaki huzurum. Hep yanımda, hep sol yanımda ol."</p>
         </div>
+    </div>
 
-        <div class="personal-note">— Mansur'dan Sevgilerle</div>
+    <div id="sos-btn" onclick="toggleSOS()">
+        <i class="fas fa-life-ring"></i>
+        <span>SOS</span>
+    </div>
+
+    <div id="sos-panel">
+        <h3>⚓ Kaptan'a Rapor Ver</h3>
+        <p>Kocaeli-Van hattında bir sorun mu var? Yaz buraya, raporun doğrudan mailime düşsün.</p>
+        <form id="sos-form">
+            <input type="hidden" name="_subject" value="🚨 Nurçin'den Acil Rapor!">
+            <textarea name="mesaj" id="sos-message" placeholder="Mesajını buraya yaz..." required></textarea>
+            <button type="submit" id="send-btn">Raporu Gönder</button>
+        </form>
+        <button onclick="toggleSOS()" style="background:#444; width:100%; padding:8px; border:none; border-radius:8px; color:white; cursor:pointer;">Kapat</button>
     </div>
 
     <audio id="main-audio" src="araftayim.mp3"></audio>
@@ -232,111 +201,92 @@
     <audio id="future-audio" src="gelecek.mp3"></audio>
 
     <script>
-        // Yıldızları oluştur
-        const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 80; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            const size = Math.random() * 2 + 'px';
-            star.style.width = size; star.style.height = size;
-            star.style.top = Math.random() * 100 + '%';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
-            starsContainer.appendChild(star);
+        // Formspree Entegrasyonu
+        const sosForm = document.getElementById('sos-form');
+        sosForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('send-btn');
+            const formspreeEndpoint = "https://formspree.io/f/xaqvqede"; 
+
+            btn.innerText = "Gönderiliyor...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(formspreeEndpoint, {
+                    method: 'POST',
+                    body: new FormData(sosForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    alert("Rapor Kaptan'a ulaştı! ⚓");
+                    sosForm.reset();
+                    toggleSOS();
+                } else { alert("Telsiz koptu, tekrar dene."); }
+            } catch (error) { alert("Bağlantı hatası."); }
+            finally { btn.innerText = "Raporu Gönder"; btn.disabled = false; }
+        });
+
+        function toggleSOS() {
+            const panel = document.getElementById('sos-panel');
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
         }
 
-        const intro = document.getElementById('intro-screen');
-        const main = document.getElementById('main-content');
-        const audio = document.getElementById('main-audio');
-        const welcomeAudio = document.getElementById('welcome-audio');
-        const futureAudio = document.getElementById('future-audio');
-        const playBtn = document.getElementById('masterPlay');
-        const playIcon = document.getElementById('play-icon');
-        const progressBar = document.getElementById('progress-bar');
-        const progressContainer = document.getElementById('progress-container');
-        const lyrics = document.querySelectorAll('.lyric');
-
-        let isFirstPlay = true;
-
-        // Sayfa Başlatma ve Karşılama Sesi
+        // Diğer Fonksiyonlar
         function startExperience() {
-            intro.style.opacity = '0';
+            document.getElementById('intro-screen').style.opacity = '0';
             setTimeout(() => { 
-                intro.style.display = 'none'; 
-                main.style.display = 'flex'; 
-                welcomeAudio.play().catch(e => console.log("Otomatik ses engellendi."));
+                document.getElementById('intro-screen').style.display = 'none'; 
+                document.getElementById('main-content').style.display = 'flex'; 
+                document.getElementById('welcome-audio').play();
             }, 1500);
             setInterval(updateCountdown, 1000);
         }
 
-        // Zaman Kapsülü Ayarı (28 Ekim 2026)
-        const targetDate = new Date(2026, 9, 28, 0, 0, 0);
-
         function updateCountdown() {
-            const now = new Date();
-            const diff = targetDate - now;
+            const diff = new Date(2026, 9, 28) - new Date();
             const timerDiv = document.getElementById('timer');
-            const btn = document.getElementById('future-btn');
-            const desc = document.querySelector('.capsule-desc');
-
             if (diff <= 0) {
                 timerDiv.innerHTML = "🔓 6. Ayımız Kutlu Olsun!";
-                btn.style.display = "inline-block";
-                desc.style.display = "none";
+                document.getElementById('future-btn').style.display = "block";
             } else {
                 const d = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
                 const m = Math.floor((diff / 1000 / 60) % 60);
-                const s = Math.floor((diff / 1000) % 60);
-                timerDiv.innerHTML = `${d}g ${h}s ${m}d ${s}s`;
+                timerDiv.innerHTML = `${d}g ${h}s ${m}d`;
             }
         }
 
-        function playFutureAudio() {
-            futureAudio.play();
-        }
+        const audio = document.getElementById('main-audio');
+        const playBtn = document.getElementById('masterPlay');
+        const progressBar = document.getElementById('progress-bar');
 
-        // Spotify Çalar Kontrolleri
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
-                if (isFirstPlay) { audio.currentTime = 61; isFirstPlay = false; }
                 audio.play();
-                playIcon.classList.replace('fa-play', 'fa-pause');
-                startLyricShow();
+                document.getElementById('play-icon').classList.replace('fa-play', 'fa-pause');
             } else {
                 audio.pause();
-                playIcon.classList.replace('fa-pause', 'fa-play');
+                document.getElementById('play-icon').classList.replace('fa-pause', 'fa-play');
             }
         });
 
-        audio.addEventListener('timeupdate', (e) => {
-            const { currentTime, duration } = e.target;
-            if (isNaN(duration)) return;
-            progressBar.style.width = `${(currentTime / duration) * 100}%`;
-            document.getElementById('current-time').innerText = formatTime(currentTime);
-            document.getElementById('duration').innerText = formatTime(duration);
+        audio.addEventListener('timeupdate', () => {
+            progressBar.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+            document.getElementById('current-time').innerText = Math.floor(audio.currentTime / 60) + ":" + String(Math.floor(audio.currentTime % 60)).padStart(2, '0');
         });
 
-        function formatTime(time) {
-            let m = Math.floor(time / 60), s = Math.floor(time % 60);
-            return `${m}:${s < 10 ? '0' + s : s}`;
-        }
+        function playFutureAudio() { document.getElementById('future-audio').play(); }
 
-        progressContainer.addEventListener('click', (e) => {
-            audio.currentTime = (e.offsetX / progressContainer.clientWidth) * audio.duration;
-            isFirstPlay = false;
-        });
-
-        let lyricIndex = 0;
-        function startLyricShow() {
-            if (lyricIndex >= lyrics.length || audio.paused) return;
-            const currentLyric = lyrics[lyricIndex];
-            currentLyric.classList.add('animate');
-            setTimeout(() => {
-                currentLyric.classList.remove('animate');
-                lyricIndex++;
-                if (!audio.paused) startLyricShow();
-            }, 6000); 
+        // Yıldızlar
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = star.style.height = Math.random() * 2 + 'px';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+            starsContainer.appendChild(star);
         }
     </script>
 </body>
