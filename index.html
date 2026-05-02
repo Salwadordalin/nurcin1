@@ -79,8 +79,10 @@
         .album-art {
             width: 100%; height: clamp(160px, 25vh, 210px); margin-bottom: 15px;
             border-radius: 12px; overflow: hidden; background: #282828;
+            display: flex; align-items: center; justify-content: center;
         }
-        .album-art img { width: 100%; height: 100%; object-fit: cover; }
+        /* FOTOĞRAFIN TAM GÖZÜKMESİ İÇİN: contain yapıldı */
+        .album-art img { width: 100%; height: 100%; object-fit: contain; }
 
         .info h1 { font-size: 1.2rem; font-weight: 700; margin-bottom: 2px; }
         .info p { color: var(--spotify-gray); font-size: 0.85rem; margin-bottom: 12px;}
@@ -182,16 +184,16 @@
 
     <div id="sos-btn" onclick="toggleSOS()">
         <i class="fas fa-life-ring"></i>
-        <span>SOS</span>
+        <span>YARDIM</span>
     </div>
 
     <div id="sos-panel">
-        <h3>⚓ Kaptan'a Rapor Ver</h3>
-        <p>Kocaeli-Van hattında bir sorun mu var? Yaz buraya, raporun doğrudan mailime düşsün.</p>
+        <h3>Bana Ulaş</h3>
+        <p>Kocaeli-Van hattında bir sorun mu var? Yaz buraya, mesajın doğrudan mailime düşsün.</p>
         <form id="sos-form">
-            <input type="hidden" name="_subject" value="🚨 Nurçin'den Acil Rapor!">
+            <input type="hidden" name="_subject" value="🚨 Nurçin'den Yeni Mesaj!">
             <textarea name="mesaj" id="sos-message" placeholder="Mesajını buraya yaz..." required></textarea>
-            <button type="submit" id="send-btn">Raporu Gönder</button>
+            <button type="submit" id="send-btn">Mesajı Gönder</button>
         </form>
         <button onclick="toggleSOS()" style="background:#444; width:100%; padding:8px; border:none; border-radius:8px; color:white; cursor:pointer;">Kapat</button>
     </div>
@@ -218,12 +220,12 @@
                     headers: { 'Accept': 'application/json' }
                 });
                 if (response.ok) {
-                    alert("Rapor Kaptan'a ulaştı! ⚓");
+                    alert("Mesajın bana ulaştı Nurçin! ❤️");
                     sosForm.reset();
                     toggleSOS();
-                } else { alert("Telsiz koptu, tekrar dene."); }
+                } else { alert("Bağlantıda sorun var, tekrar dene."); }
             } catch (error) { alert("Bağlantı hatası."); }
-            finally { btn.innerText = "Raporu Gönder"; btn.disabled = false; }
+            finally { btn.innerText = "Mesajı Gönder"; btn.disabled = false; }
         });
 
         function toggleSOS() {
@@ -231,7 +233,6 @@
             panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
         }
 
-        // Diğer Fonksiyonlar
         function startExperience() {
             document.getElementById('intro-screen').style.opacity = '0';
             setTimeout(() => { 
@@ -277,7 +278,6 @@
 
         function playFutureAudio() { document.getElementById('future-audio').play(); }
 
-        // Yıldızlar
         const starsContainer = document.getElementById('stars');
         for (let i = 0; i < 50; i++) {
             const star = document.createElement('div');
