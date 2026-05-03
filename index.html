@@ -409,7 +409,7 @@ button { cursor:pointer; font-family:var(--ui); }
   <div class="intro-aurora"></div>
   <span class="intro-moon">🌙</span>
   <h1 class="intro-title">Doğum Günün Kutlu Olsun,<br>Nurçin.</h1>
-  <p class="intro-sub">Nice beraber geçireceğimiz senelerin umuduyla —<br>seninle her an başlı başına bir şiir.</p>
+  <p class="intro-sub">Nice beraber geçireceğimiz senelerin umuduyla :)<br>seninle her an bana huzur veriyor</p>
   <span class="intro-cta">Ekrana dokun &nbsp;❤</span>
 </div>
 
@@ -473,7 +473,7 @@ button { cursor:pointer; font-family:var(--ui); }
     <div class="capsule">
       <div class="cap-label">⏳ Zaman Kapsülü</div>
       <div id="tval">Yükleniyor…</div>
-      <p class="cap-sub" id="csub">28 Ekim 2026 — 6. Ayımız</p>
+      <p class="cap-sub" id="csub">28 Ekim 2026 — 6. Ayımız Dolduğunda Erişime Açık Olacak :)</p>
       <button id="ubtn" onclick="playFuture()">Gizli Mesajı Dinle 🔓</button>
     </div>
 
@@ -561,7 +561,7 @@ button { cursor:pointer; font-family:var(--ui); }
       <h3><i class="fas fa-paper-plane" style="font-size:.85rem"></i> Bana Ulaş</h3>
       <button class="mx" onclick="closeSOS()" aria-label="Kapat"><i class="fas fa-xmark"></i></button>
     </div>
-    <p class="msub">Aklında takılan, kalbinde biriken bir şey mi var? Bu alan tamamen sana ait — mesajın doğruca bana ulaşır. ✉️</p>
+    <p class="msub">Aklında takılan, kalbinde biriken bir şey mi var? Bu alan tamamen sana ait — mesajın doğruca bana ulaşır. ✉</p>
     <textarea id="mta" placeholder="Buraya yaz, dinliyorum…"></textarea>
     <div class="mbtns">
       <button id="sbtn" onclick="sendMsg()">Gönder</button>
@@ -674,10 +674,10 @@ console.log('%c"Seninle olmak, evreni kıyısından izlemek değil — tam ortas
 ══════════════════════════════════════════ */
 function setGreeting(){
   const h=new Date().getHours();
-  const msg=h>=5&&h<12?'☀️ Günaydın güzelim — bugün özel bir gün!':
-            h>=12&&h<18?'🌤 Tünaydın tatlım — doğum günün kutlu olsun!':
-            h>=18&&h<22?'🌇 İyi akşamlar Nurçin — bu gece senin gecen!':
-                        '🌙 İyi geceler sevgilim — rüyaların güzel olsun!';
+  const msg=h>=5&&h<12?'☀️ Günaydın Güzelim — bugün özel bir gün!':
+            h>=12&&h<18?'🌤 Tünaydın Tatlım ':
+            h>=18&&h<22?'🌇 İyi akşamlar Canım':
+                        '🌙 İyi geceler Balım — Doğum Günün Kutlu Olsun!';
   const el=document.getElementById('greeting');
   el.textContent=msg; el.classList.add('show');
 }
@@ -793,11 +793,11 @@ voiceAudio.addEventListener('ended',stopVoice);
 
 /* ── EDIT THESE TEXTS — one note per photo ──────────────────────── */
 const PHOTO_NOTES=[
-  'İlk gülüşün…',                                  // 1.jpg
+  'Çocukluğuna ayrı aşık oldum.',                                  // 1.jpg
   'Bak burada ne kadar küçüksün…',                  // 2.jpg
-  'O güneşli günü hiç unutmadım…',                 // 3.jpg
+  'Gülüşünün sebebi nedir ki?',                 // 3.jpg
   'Tam bu anda ne düşünüyordun acaba?',             // 4.jpg
-  'Ve işte bu an — seninle her şey başladı.',       // 5.jpg
+  'İstanbul Hanımefendisi',       // 5.jpg
 ];
 /* ─────────────────────────────────────────────────────────────── */
 
