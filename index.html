@@ -57,6 +57,27 @@ button { cursor: pointer; font-family: var(--ui); }
 }
 
 /* ════════════════════════════════════════════════
+   AURA RIPPLE LAYER
+════════════════════════════════════════════════ */
+#ripple-layer {
+  position: fixed; inset: 0; z-index: 9998;
+  pointer-events: none;
+  overflow: hidden;
+}
+.aura-ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  animation: auraExpand var(--dur, 1.1s) cubic-bezier(.22,.61,.36,1) forwards;
+}
+@keyframes auraExpand {
+  0%   { transform: translate(-50%,-50%) scale(0);   opacity: .7; }
+  60%  { opacity: .3; }
+  100% { transform: translate(-50%,-50%) scale(1);   opacity: 0; }
+}
+
+/* ════════════════════════════════════════════════
    HEART RAIN PARTICLES
 ════════════════════════════════════════════════ */
 .h-rain {
@@ -172,7 +193,6 @@ button { cursor: pointer; font-family: var(--ui); }
   position: relative;
 }
 
-/* ── Vinyl glow on play ── */
 .player-card::before {
   content: '';
   position: absolute; inset: 0;
@@ -195,7 +215,6 @@ button { cursor: pointer; font-family: var(--ui); }
   overflow: hidden;
   position: relative;
 }
-/* tap hint ripple */
 .flip-scene::after {
   content: 'Fotoğrafa dokun ✦';
   position: absolute; bottom: 10px; right: 14px; z-index: 5;
@@ -224,7 +243,7 @@ button { cursor: pointer; font-family: var(--ui); }
 }
 .flip-back { transform: rotateY(180deg); }
 
-/* FRONT — dual layer blur fill */
+/* FRONT */
 .art-blur {
   position: absolute; inset: -15px;
   background: url('kapak.jpg') center/cover no-repeat;
@@ -248,7 +267,7 @@ button { cursor: pointer; font-family: var(--ui); }
   width: 100%; height: 100%;
 }
 
-/* BACK — Polaroid */
+/* BACK — Polaroid with childhood photo */
 .polaroid {
   width: 100%; height: 100%;
   background: #f0ece2;
@@ -266,13 +285,37 @@ button { cursor: pointer; font-family: var(--ui); }
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0,0,0,.12);
 }
+/* Childhood image on back */
 .pol-img {
   width: 100%; flex: 1;
-  background: #bbb url('kapak.jpg') center/cover no-repeat;
+  background: #bbb url('cocukluk.jpg') center/cover no-repeat;
   border-radius: 3px;
   max-height: 60%;
   box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  position: relative;
 }
+/* Voice memory play button on the photo */
+.voice-btn {
+  position: absolute; bottom: 8px; right: 8px;
+  width: 36px; height: 36px;
+  background: rgba(0,0,0,.55);
+  border: 1.5px solid rgba(255,255,255,.55);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: .85rem;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background .2s, transform .15s;
+  z-index: 10;
+}
+.voice-btn:hover { background: rgba(255,71,87,.7); transform: scale(1.1); }
+.voice-btn.playing-voice { background: rgba(255,71,87,.8); }
+.voice-btn.playing-voice i { animation: speakerPulse .6s ease-in-out infinite alternate; }
+@keyframes speakerPulse {
+  from { transform: scale(1); }
+  to   { transform: scale(1.2); }
+}
+
 .pol-note {
   font-family: var(--hand);
   font-size: clamp(1.05rem, 4.5vw, 1.35rem);
@@ -291,7 +334,6 @@ button { cursor: pointer; font-family: var(--ui); }
 .track-meta h2 { font-size: 1.1rem; font-weight: 700; letter-spacing: .2px; }
 .track-meta p  { font-size: .8rem; color: var(--gray); margin-top: .2rem; }
 
-/* Progress */
 .prog { margin-bottom: 1rem; }
 .ptrack {
   width: 100%; height: 4px;
@@ -320,7 +362,6 @@ button { cursor: pointer; font-family: var(--ui); }
   font-variant-numeric: tabular-nums;
 }
 
-/* Controls */
 .ctrl { display: flex; align-items: center; justify-content: center; gap: 1.8rem; }
 .skp {
   background: none; border: none; color: var(--gray);
@@ -342,7 +383,7 @@ button { cursor: pointer; font-family: var(--ui); }
 .pbtn.on { box-shadow: 0 0 0 10px rgba(255,255,255,.07), 0 6px 24px rgba(0,0,0,.5); }
 
 /* ════════════════════════════════════════════════
-   HEART / HEARTBEAT CARD
+   AURA TOUCH CARD (replaces Heartbeat card)
 ════════════════════════════════════════════════ */
 .hb-card {
   background: var(--surface2);
@@ -409,6 +450,77 @@ button { cursor: pointer; font-family: var(--ui); }
   position: relative; z-index: 1;
 }
 #ubtn:hover { transform: scale(1.06); }
+
+/* ════════════════════════════════════════════════
+   WISH BOX — DİLEK KUTUSU
+════════════════════════════════════════════════ */
+.wish-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.3rem 1.5rem;
+  position: relative; overflow: hidden;
+}
+.wish-box::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(255,200,90,.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.wish-label {
+  font-size: .62rem; text-transform: uppercase;
+  letter-spacing: 2.5px; color: rgba(255,200,90,.7);
+  font-weight: 600; margin-bottom: .7rem;
+  display: flex; align-items: center; gap: .45rem;
+}
+.wish-label i { font-size: .7rem; }
+.wish-input {
+  width: 100%;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 13px;
+  color: var(--white); padding: .82rem 1rem;
+  font-family: var(--hand); font-size: 1rem;
+  resize: none; outline: none; height: 80px;
+  transition: border-color .25s;
+  margin-bottom: .75rem;
+  display: block;
+}
+.wish-input:focus { border-color: rgba(255,200,90,.4); }
+.wish-input::placeholder { color: rgba(255,255,255,.2); font-family: var(--hand); }
+.wish-send {
+  width: 100%; padding: .72rem;
+  background: linear-gradient(135deg, rgba(255,200,90,.18), rgba(255,200,90,.08));
+  border: 1px solid rgba(255,200,90,.25); border-radius: 13px;
+  color: rgba(255,200,90,.9); font-size: .82rem; font-weight: 600;
+  letter-spacing: .5px;
+  transition: transform .15s, background .2s, box-shadow .2s;
+  position: relative; overflow: hidden;
+}
+.wish-send:hover {
+  transform: scale(1.02);
+  background: linear-gradient(135deg, rgba(255,200,90,.28), rgba(255,200,90,.15));
+  box-shadow: 0 0 22px rgba(255,200,90,.15);
+}
+.wish-send:disabled { opacity: .45; cursor: default; transform: none; }
+
+/* Wish sent success state */
+.wish-success {
+  text-align: center; padding: .8rem 0 .2rem;
+  animation: wishFadeIn .6s ease;
+  display: none;
+}
+@keyframes wishFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.wish-success .ws-star { font-size: 2rem; display: block; margin-bottom: .4rem; animation: starSpin 1.5s ease forwards; }
+@keyframes starSpin {
+  0%   { transform: scale(0) rotate(-180deg); }
+  70%  { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.wish-success p { font-family: var(--hand); font-size: 1.05rem; color: rgba(255,200,90,.8); }
 
 /* ════════════════════════════════════════════════
    LOVE QUOTE
@@ -530,7 +642,7 @@ button { cursor: pointer; font-family: var(--ui); }
   opacity: 0; transition: opacity .3s, transform .3s;
   z-index: 900; pointer-events: none;
   max-width: calc(100vw - 2rem);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  overflow: hidden; text-overflow: ellipsis;
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -550,6 +662,9 @@ button { cursor: pointer; font-family: var(--ui); }
 
 <!-- ── STAR + SHOOTING STAR CANVAS ── -->
 <canvas id="cvs"></canvas>
+
+<!-- ── AURA RIPPLE LAYER ── -->
+<div id="ripple-layer"></div>
 
 <!-- ── DYNAMIC GREETING BANNER ── -->
 <div id="greeting"></div>
@@ -577,13 +692,13 @@ button { cursor: pointer; font-family: var(--ui); }
     <div class="player-card" id="playerCard">
 
       <!-- 3D FLIP -->
-      <div class="flip-scene" id="flipScene" onclick="flipCard()"
+      <div class="flip-scene" id="flipScene"
            role="button" tabindex="0" aria-label="Fotoğrafı çevir"
            onkeydown="if(event.key==='Enter')flipCard()">
         <div class="flip-inner" id="flipInner">
 
-          <!-- FRONT -->
-          <div class="flip-front">
+          <!-- FRONT — album cover -->
+          <div class="flip-front" onclick="flipCard()">
             <div class="art-blur"></div>
             <div class="art-fg">
               <img id="coverImg" src="kapak.jpg" alt="Araftayım — Ebru Gündeş"
@@ -591,11 +706,18 @@ button { cursor: pointer; font-family: var(--ui); }
             </div>
           </div>
 
-          <!-- BACK — Polaroid -->
+          <!-- BACK — Childhood Polaroid -->
           <div class="flip-back">
-            <div class="polaroid">
+            <div class="polaroid" onclick="flipCard()">
               <div class="pol-tape"></div>
-              <div class="pol-img"></div>
+              <div class="pol-img">
+                <!-- Voice memory button — stop propagation so flip doesn't fire -->
+                <button class="voice-btn" id="voiceBtn"
+                        onclick="toggleVoice(event)"
+                        aria-label="Ses anısını dinle">
+                  <i class="fas fa-volume-high" id="voiceIcon"></i>
+                </button>
+              </div>
               <p class="pol-note">"Seni seviyorum,<br>dünden çok, yarından az."</p>
               <span class="pol-date">6 Mayıs 2025 &nbsp;♡</span>
             </div>
@@ -634,16 +756,14 @@ button { cursor: pointer; font-family: var(--ui); }
 
     </div><!-- player-card -->
 
-    <!-- ── HEART / HAPTIC CARD ── -->
+    <!-- ── AURA TOUCH INFO CARD ── -->
     <div class="hb-card">
-      <button class="hb-btn" id="hbtn"
-              aria-label="Kalp atışı — uzun bas"
-              title="Mobilde uzun bas ❤">
-        <i class="fas fa-heart"></i>
+      <button class="hb-btn" id="hbtn" aria-label="Dokunuş alanı">
+        <i class="fas fa-circle-dot"></i>
       </button>
       <div class="hb-txt">
-        <h4>Kalp Atışı</h4>
-        <p>Tıkla — yüreğime yağmur yağsın.<br>Mobilde uzun bas — kalp atışımı hisset. ❤</p>
+        <h4>Aura Dokunuşu</h4>
+        <p>Ekrana her dokunduğunda — sevginin dalgaları yayılıyor. Her temas bir iz bırakır. ✨</p>
       </div>
     </div>
 
@@ -653,6 +773,26 @@ button { cursor: pointer; font-family: var(--ui); }
       <div id="tval">Yükleniyor…</div>
       <p class="cap-sub" id="csub">28 Ekim 2026 — 6. Ayımız</p>
       <button id="ubtn" onclick="playFuture()">Gizli Mesajı Dinle 🔓</button>
+    </div>
+
+    <!-- ── WISH BOX ── -->
+    <div class="wish-box">
+      <div class="wish-label">
+        <i class="fas fa-star"></i> Dilek Kutusu
+      </div>
+      <!-- Input form -->
+      <div id="wishForm">
+        <textarea class="wish-input" id="wishInput"
+                  placeholder="Bir dileğini fısılda, yıldızlara gönderelim… ✨"></textarea>
+        <button class="wish-send" id="wishSendBtn" onclick="sendWish()">
+          Yıldızlara Gönder &nbsp;✦
+        </button>
+      </div>
+      <!-- Success state -->
+      <div class="wish-success" id="wishSuccess">
+        <span class="ws-star">⭐</span>
+        <p>Dileğin yıldızlara karıştı…</p>
+      </div>
     </div>
 
     <!-- ── LOVE QUOTE ── -->
@@ -692,6 +832,7 @@ button { cursor: pointer; font-family: var(--ui); }
 <audio id="amain"   src="araftayim.mp3" preload="metadata"></audio>
 <audio id="awelc"   src="karsilama.mp3" preload="auto"></audio>
 <audio id="afuture" src="gelecek.mp3"   preload="none"></audio>
+<audio id="ahatira" src="hatira.mp3"    preload="none"></audio>
 
 <!-- ════════════════════════════════════════════════
      JAVASCRIPT
@@ -703,14 +844,13 @@ console.log('%cBuraya kadar geldin demek. Seni bu kadar merak ediyorum işte.', 
 console.log('%c"Seninle olmak, evreni kıyısından izlemek değil — tam ortasında durmak gibi."', 'font-size:13px;color:#ff4757;font-style:italic;');
 
 /* ══════════════════════════════════════════
-   CANVAS — STARS + SHOOTING STARS
+   CANVAS — STARS + SHOOTING STARS + WISH STARS
 ══════════════════════════════════════════ */
 (function () {
   const cv = document.getElementById('cvs');
   const cx = cv.getContext('2d');
-  cv.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;';
 
-  let stars = [], shoots = [];
+  let stars = [], shoots = [], wishStars = [];
 
   function resize() { cv.width = innerWidth; cv.height = innerHeight; }
 
@@ -745,10 +885,23 @@ console.log('%c"Seninle olmak, evreni kıyısından izlemek değil — tam ortas
     setTimeout(spawnShoot, 3800 + Math.random() * 7000);
   }
 
+  /* ── PUBLIC: add a wish star from JS ── */
+  window.addWishStar = function() {
+    wishStars.push({
+      x: Math.random() * cv.width,
+      y: Math.random() * cv.height * .7,
+      r: 2.8 + Math.random() * 1.8,
+      phase: 0,
+      twinkleSpeed: 1.4 + Math.random() * .8,
+      birth: performance.now()
+    });
+  };
+
   function frame(ts) {
     cx.clearRect(0, 0, cv.width, cv.height);
     const t = ts * .001;
 
+    /* Regular stars */
     for (const s of stars) {
       const o = s.base + Math.sin(t * s.sp + s.ph) * s.base * .9;
       cx.beginPath();
@@ -757,6 +910,7 @@ console.log('%c"Seninle olmak, evreni kıyısından izlemek değil — tam ortas
       cx.fill();
     }
 
+    /* Shooting stars */
     for (let i = shoots.length - 1; i >= 0; i--) {
       const sh = shoots[i];
       sh.x += sh.vx; sh.y += sh.vy; sh.life -= sh.decay;
@@ -775,13 +929,47 @@ console.log('%c"Seninle olmak, evreni kıyısından izlemek değil — tam ortas
       cx.lineTo(sh.x, sh.y);
       cx.strokeStyle = grd;
       cx.lineWidth = 2; cx.lineCap = 'round'; cx.stroke();
-
-      // head glow
       const hg = cx.createRadialGradient(sh.x, sh.y, 0, sh.x, sh.y, 6);
       hg.addColorStop(0, `rgba(255,255,240,${sh.life.toFixed(3)})`);
       hg.addColorStop(1, 'rgba(255,255,240,0)');
       cx.beginPath(); cx.arc(sh.x, sh.y, 6, 0, Math.PI * 2);
       cx.fillStyle = hg; cx.fill();
+    }
+
+    /* ✦ Wish stars — extra bright, golden, permanent for session */
+    for (const ws of wishStars) {
+      const age = (ts - ws.birth) * .001;
+      /* Entrance: scale from 0 to 1 over 1.5s */
+      const scale = Math.min(1, age / 1.5);
+      const twinkle = .55 + .45 * Math.sin(t * ws.twinkleSpeed + ws.birth);
+      const opacity = scale * twinkle;
+
+      /* Outer glow */
+      const glow = cx.createRadialGradient(ws.x, ws.y, 0, ws.x, ws.y, ws.r * 4);
+      glow.addColorStop(0, `rgba(255,220,100,${(opacity * .55).toFixed(3)})`);
+      glow.addColorStop(1, 'rgba(255,220,100,0)');
+      cx.beginPath(); cx.arc(ws.x, ws.y, ws.r * 4, 0, Math.PI * 2);
+      cx.fillStyle = glow; cx.fill();
+
+      /* Core */
+      cx.beginPath(); cx.arc(ws.x, ws.y, ws.r * scale, 0, Math.PI * 2);
+      cx.fillStyle = `rgba(255,240,160,${opacity.toFixed(3)})`;
+      cx.fill();
+
+      /* Cross sparkle */
+      cx.save();
+      cx.translate(ws.x, ws.y);
+      cx.rotate(t * .3 + ws.birth);
+      cx.strokeStyle = `rgba(255,255,200,${(opacity * .6).toFixed(3)})`;
+      cx.lineWidth = 1;
+      const sp = ws.r * 2.2 * scale;
+      for (let a = 0; a < 4; a++) {
+        cx.beginPath();
+        cx.moveTo(0, 0);
+        cx.lineTo(sp * (a < 2 ? (a === 0 ? 1 : -1) : 0), sp * (a >= 2 ? (a === 2 ? 1 : -1) : 0));
+        cx.stroke();
+      }
+      cx.restore();
     }
 
     requestAnimationFrame(frame);
@@ -796,6 +984,55 @@ console.log('%c"Seninle olmak, evreni kıyısından izlemek değil — tam ortas
     const my = (e.clientY / innerHeight - .5) * .3;
     for (const s of stars) { s.x += mx * s.r; s.y += my * s.r; }
   }, { passive: true });
+})();
+
+/* ══════════════════════════════════════════
+   AURA RIPPLE — touch / click anywhere
+══════════════════════════════════════════ */
+(function () {
+  const layer = document.getElementById('ripple-layer');
+
+  function spawnRipple(x, y) {
+    const el = document.createElement('div');
+    el.className = 'aura-ripple';
+
+    /* Random size between 120px and 320px */
+    const size = 120 + Math.random() * 200;
+
+    /* Gradient: soft red → white → transparent */
+    const r = Math.random();
+    const gradient = r > .5
+      ? `radial-gradient(circle, rgba(255,255,255,.38) 0%, rgba(255,71,87,.22) 35%, rgba(255,71,87,.06) 65%, transparent 100%)`
+      : `radial-gradient(circle, rgba(255,200,200,.32) 0%, rgba(255,71,87,.18) 40%, rgba(255,100,100,.04) 70%, transparent 100%)`;
+
+    el.style.cssText = `
+      left: ${x}px; top: ${y}px;
+      width: ${size}px; height: ${size}px;
+      background: ${gradient};
+      --dur: ${0.9 + Math.random() * 0.5}s;
+    `;
+
+    layer.appendChild(el);
+    setTimeout(() => el.remove(), 1600);
+  }
+
+  /* Throttle to avoid flood on drag */
+  let last = 0;
+  function handle(e) {
+    const now = Date.now();
+    if (now - last < 80) return;
+    last = now;
+
+    if (e.touches) {
+      for (const t of e.touches) spawnRipple(t.clientX, t.clientY);
+    } else {
+      spawnRipple(e.clientX, e.clientY);
+    }
+  }
+
+  document.addEventListener('mousedown', handle);
+  document.addEventListener('touchstart', handle, { passive: true });
+  document.addEventListener('touchmove', handle, { passive: true });
 })();
 
 /* ══════════════════════════════════════════
@@ -857,10 +1094,12 @@ let flipped = false;
 function flipCard() {
   flipped = !flipped;
   document.getElementById('flipScene').classList.toggle('flipped', flipped);
+  /* Stop voice memory if card flips back to front */
+  if (!flipped) stopVoice();
 }
 
 /* ══════════════════════════════════════════
-   AUDIO PLAYER
+   AUDIO PLAYER  — Feature 1: start at 61s on first play
 ══════════════════════════════════════════ */
 const audio  = document.getElementById('amain');
 const pbtn   = document.getElementById('pbtn');
@@ -869,10 +1108,17 @@ const pfill  = document.getElementById('pfill');
 const ptrack = document.getElementById('ptrack');
 const card   = document.getElementById('playerCard');
 
+let firstPlay = true;   // flag: has user pressed play yet?
+
 pbtn.addEventListener('click', togglePlay);
 
 function togglePlay() {
   if (audio.paused) {
+    /* Feature 1: seek to 61s only on very first play */
+    if (firstPlay) {
+      audio.currentTime = 61;
+      firstPlay = false;
+    }
     audio.play();
     picon.className = 'fas fa-pause';
     pbtn.classList.add('on');
@@ -892,48 +1138,101 @@ audio.addEventListener('timeupdate', () => {
 });
 audio.addEventListener('loadedmetadata', () => {
   document.getElementById('tdur').textContent = fmt(audio.duration);
+  /* Pre-display the 1:01 position in time display before first play */
+  document.getElementById('tcur').textContent = fmt(61);
+  pfill.style.width = (61 / audio.duration * 100) + '%';
 });
 audio.addEventListener('ended', () => {
   picon.className = 'fas fa-play';
   pbtn.classList.remove('on');
   card.classList.remove('playing');
   pfill.style.width = '0%';
+  firstPlay = true; /* Reset: next press starts from 61s again */
 });
 ptrack.addEventListener('click', e => {
   const r = ptrack.getBoundingClientRect();
   audio.currentTime = ((e.clientX - r.left) / r.width) * (audio.duration || 0);
+  firstPlay = false; /* User manually scrubbed — don't override */
 });
 function seekRel(s) {
   audio.currentTime = Math.max(0, Math.min(audio.duration || 0, audio.currentTime + s));
+  firstPlay = false;
 }
 function fmt(s) {
   return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
 }
 
 /* ══════════════════════════════════════════
-   HAPTIC HEARTBEAT + HEART RAIN CLICK
+   VOICE MEMORY  — Feature 3
 ══════════════════════════════════════════ */
-const hbtn = document.getElementById('hbtn');
-let htmr;
-const BEAT = [80, 60, 180, 60, 80, 500, 80, 60, 180];
+const voiceAudio = document.getElementById('ahatira');
+const voiceBtn   = document.getElementById('voiceBtn');
+const voiceIcon  = document.getElementById('voiceIcon');
 
-function triggerHeart() {
-  heartRain(18);
-  if ('vibrate' in navigator) navigator.vibrate(BEAT);
-  showToast('💗 Kalp atışın hissedildi…');
+function toggleVoice(e) {
+  e.stopPropagation(); /* Prevent card flip */
+  if (voiceAudio.paused) {
+    voiceAudio.play().catch(() => showToast('⚠️ Ses dosyası yüklenemedi.'));
+    voiceBtn.classList.add('playing-voice');
+    voiceIcon.className = 'fas fa-volume-xmark';
+    showToast('🎙 Ses anısı oynatılıyor…');
+  } else {
+    stopVoice();
+  }
 }
+function stopVoice() {
+  voiceAudio.pause();
+  voiceAudio.currentTime = 0;
+  voiceBtn.classList.remove('playing-voice');
+  voiceIcon.className = 'fas fa-volume-high';
+}
+voiceAudio.addEventListener('ended', stopVoice);
 
-hbtn.addEventListener('click', triggerHeart);
+/* ══════════════════════════════════════════
+   WISH BOX  — Feature 4
+══════════════════════════════════════════ */
+async function sendWish() {
+  const input = document.getElementById('wishInput');
+  const wish = input.value.trim();
+  if (!wish) { showToast('✨ Önce bir şeyler fısılda…'); return; }
 
-// long press for haptics specifically
-hbtn.addEventListener('touchstart', e => {
-  e.preventDefault();
-  htmr = setTimeout(() => {
-    if ('vibrate' in navigator) navigator.vibrate(BEAT);
-    showToast('💗 Kalp atışını hissettim…');
-  }, 600);
-}, { passive: false });
-['touchend', 'touchcancel'].forEach(ev => hbtn.addEventListener(ev, () => clearTimeout(htmr)));
+  const btn = document.getElementById('wishSendBtn');
+  btn.textContent = 'Gönderiliyor…'; btn.disabled = true;
+
+  try {
+    /* Submit to Formspree */
+    const fd = new FormData();
+    fd.append('mesaj', '⭐ DİLEK: ' + wish);
+    fd.append('_subject', '⭐ Nurçin\'den Dilek!');
+    const r = await fetch('https://formspree.io/f/xaqvqede', {
+      method: 'POST', body: fd, headers: { Accept: 'application/json' }
+    });
+
+    /* Whether or not formspree works, add star to canvas and show success */
+    addWishStar();   /* Add a permanent wish star to the starfield */
+    heartRain(10);
+
+    /* Show success state */
+    document.getElementById('wishForm').style.display = 'none';
+    const suc = document.getElementById('wishSuccess');
+    suc.style.display = 'block';
+    showToast('⭐ Dileğin yıldızlara karıştı!');
+
+    /* After 5s, reset form for another wish */
+    setTimeout(() => {
+      suc.style.display = 'none';
+      document.getElementById('wishForm').style.display = 'block';
+      input.value = '';
+      btn.textContent = 'Yıldızlara Gönder \u00a0✦';
+      btn.disabled = false;
+    }, 5000);
+
+  } catch {
+    showToast('⚠️ Bağlantı hatası oluştu.');
+    btn.textContent = 'Yıldızlara Gönder \u00a0✦';
+    btn.disabled = false;
+  }
+}
 
 /* ══════════════════════════════════════════
    COUNTDOWN
