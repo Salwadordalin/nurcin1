@@ -37,7 +37,6 @@ body {
   min-height:100vh; background:var(--bg);
   font-family:var(--ui); color:var(--white); overflow-x:hidden;
 }
-/* Mood tint layer */
 body::after {
   content:''; position:fixed; inset:0; z-index:5;
   background:var(--mood-tint); pointer-events:none;
@@ -48,24 +47,20 @@ button { cursor:pointer; font-family:var(--ui); }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:99px; }
 
-/* ════ CANVAS ════ */
 #cvs { position:fixed; inset:0; z-index:0; pointer-events:none; }
 
-/* ════ HEART RAIN ════ */
 .h-rain {
   position:fixed; top:-40px; z-index:9999; pointer-events:none;
   font-size:1.2rem; line-height:1; animation:hFall linear forwards; will-change:transform,opacity;
 }
 @keyframes hFall { 0%{transform:translateY(0) rotate(0);opacity:1} 80%{opacity:.8} 100%{transform:translateY(110vh) rotate(360deg);opacity:0} }
 
-/* ════ RISING STAR ════ */
 .rising-star {
   position:fixed; z-index:9990; font-size:1.4rem; pointer-events:none;
   animation:riseToSky 2.2s cubic-bezier(.2,.6,.3,1) forwards; will-change:transform,opacity;
 }
 @keyframes riseToSky { 0%{transform:translateY(0) scale(1);opacity:1} 60%{opacity:.9} 100%{transform:translateY(-85vh) scale(.25);opacity:0} }
 
-/* ════ GREETING ════ */
 #greeting {
   position:fixed; top:0; left:0; right:0; z-index:200; text-align:center;
   font-size:.7rem; font-weight:600; letter-spacing:2px; text-transform:uppercase;
@@ -76,7 +71,6 @@ button { cursor:pointer; font-family:var(--ui); }
 }
 #greeting.show { opacity:1; transform:translateY(0); }
 
-/* ════ INTRO ════ */
 #intro {
   position:fixed; inset:0; z-index:500; background:#000;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -106,7 +100,6 @@ button { cursor:pointer; font-family:var(--ui); }
 .intro-cta { font-size:.65rem; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.22); animation:ctaBlink 2.6s ease-in-out infinite; }
 @keyframes ctaBlink { 0%,100%{opacity:.22} 50%{opacity:.75} }
 
-/* ════ APP ════ */
 #app {
   position:relative; z-index:10; min-height:100vh;
   padding:4.5rem 1rem 7.5rem; display:flex; flex-direction:column;
@@ -115,6 +108,248 @@ button { cursor:pointer; font-family:var(--ui); }
 }
 #app.show { opacity:1; pointer-events:auto; }
 .col { width:100%; max-width:430px; display:flex; flex-direction:column; gap:1.2rem; }
+
+/* ════ CAKE SCENE ════ */
+.cake-scene {
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end;
+  padding:1.6rem 1rem 1.8rem;
+  background:linear-gradient(160deg, #1a1212 0%, #100d0d 100%);
+  border:1px solid rgba(255,200,90,.1);
+  border-radius:var(--r);
+  box-shadow:var(--shadow), 0 0 0 1px var(--border);
+  position:relative;
+  overflow:hidden;
+  gap:0;
+}
+.cake-scene::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,71,87,.05) 0%, transparent 65%);
+}
+.cake-label {
+  position:absolute;
+  top:1.1rem;
+  left:0; right:0;
+  text-align:center;
+  font-size:.6rem;
+  text-transform:uppercase;
+  letter-spacing:2.5px;
+  color:rgba(255,200,90,.55);
+  font-weight:600;
+  font-family:var(--ui);
+  opacity:0;
+  animation:cakeLabelIn .6s ease 3.8s forwards;
+}
+@keyframes cakeLabelIn {
+  from { opacity:0; transform:translateY(-4px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.cake-stage {
+  position:relative;
+  width:180px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end;
+  padding-top:64px;
+}
+.cake-sponge {
+  width:160px;
+  height:62px;
+  border-radius:6px 6px 10px 10px;
+  background:linear-gradient(180deg, #c8723a 0%, #a0522d 45%, #7a3a1a 100%);
+  box-shadow:0 8px 24px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,200,150,.18), inset 0 -2px 0 rgba(0,0,0,.3);
+  position:relative;
+  transform-origin:bottom center;
+  opacity:0;
+  transform:translateY(-22px) scaleX(.82);
+  animation:spongeIn .75s cubic-bezier(.34,1.38,.64,1) 0.5s forwards;
+  z-index:2;
+}
+@keyframes spongeIn {
+  0%   { opacity:0; transform:translateY(-22px) scaleX(.82); }
+  60%  { opacity:1; transform:translateY(3px)  scaleX(1.03); }
+  100% { opacity:1; transform:translateY(0)    scaleX(1); }
+}
+.cake-cream {
+  width:168px;
+  position:absolute;
+  bottom:62px;
+  left:50%;
+  transform:translateX(-50%) scaleY(0);
+  transform-origin:bottom center;
+  z-index:3;
+  opacity:0;
+  animation:creamIn .65s cubic-bezier(.34,1.28,.64,1) 1.55s forwards;
+}
+@keyframes creamIn {
+  0%   { opacity:0; transform:translateX(-50%) scaleY(0); }
+  50%  { opacity:1; transform:translateX(-50%) scaleY(1.08); }
+  100% { opacity:1; transform:translateX(-50%) scaleY(1); }
+}
+.cake-cream-flat {
+  width:100%;
+  height:14px;
+  background:linear-gradient(180deg, #f5f0e8 0%, #e8ddd0 100%);
+  border-radius:4px 4px 0 0;
+  box-shadow:0 -2px 10px rgba(255,220,180,.12);
+  position:relative;
+  z-index:1;
+}
+.cake-cream-drips {
+  width:100%;
+  display:block;
+  position:absolute;
+  top:10px;
+  left:0;
+}
+.cake-rosettes {
+  display:flex;
+  justify-content:space-around;
+  align-items:flex-end;
+  padding:0 10px;
+  position:absolute;
+  bottom:12px;
+  left:0; right:0;
+  z-index:2;
+}
+.rosette {
+  width:14px; height:10px;
+  background:radial-gradient(circle at 50% 40%, #fff8f0, #d4c4b0);
+  border-radius:50% 50% 40% 40%;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+}
+.cake-candle {
+  position:absolute;
+  bottom:76px;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  opacity:0;
+  z-index:5;
+  animation:candleIn .5s cubic-bezier(.34,1.4,.64,1) 2.5s forwards;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+@keyframes candleIn {
+  0%   { opacity:0; transform:translateX(-50%) translateY(20px) scaleY(.3); }
+  70%  { opacity:1; transform:translateX(-50%) translateY(-3px) scaleY(1.05); }
+  100% { opacity:1; transform:translateX(-50%) translateY(0) scaleY(1); }
+}
+.candle-body {
+  width:12px;
+  height:38px;
+  border-radius:3px 3px 2px 2px;
+  background:linear-gradient(180deg, #ffd700 0%, #ff8c42 40%, #e05a28 100%);
+  box-shadow:0 4px 16px rgba(255,140,66,.35), inset 1px 0 0 rgba(255,255,200,.3), inset -1px 0 0 rgba(0,0,0,.18);
+  position:relative;
+}
+.candle-wick {
+  width:1.5px;
+  height:7px;
+  background:linear-gradient(180deg, #e8d5a0 0%, #6b4c2a 100%);
+  border-radius:1px;
+  margin-bottom:-1px;
+}
+.cake-flame {
+  position:absolute;
+  bottom: 122px;
+  left:50%;
+  transform:translateX(-50%);
+  opacity:0;
+  z-index:6;
+  animation:flameAppear .4s ease 3.25s forwards;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+}
+@keyframes flameAppear {
+  0%   { opacity:0; transform:translateX(-50%) scale(0); }
+  60%  { opacity:1; transform:translateX(-50%) scale(1.15); }
+  100% { opacity:1; transform:translateX(-50%) scale(1); }
+}
+.flame-outer {
+  width:14px;
+  height:22px;
+  background:linear-gradient(180deg, rgba(255,200,50,.0) 0%, rgba(255,160,20,.85) 35%, rgba(255,71,87,.95) 70%, rgba(200,30,50,.8) 100%);
+  border-radius:50% 50% 30% 30% / 60% 60% 40% 40%;
+  position:relative;
+  animation:flickerOuter 1.4s ease-in-out infinite;
+  filter:blur(.4px);
+}
+@keyframes flickerOuter {
+  0%,100% { transform:scaleX(1)   scaleY(1)   skewX(0deg); }
+  20%     { transform:scaleX(.88) scaleY(1.07) skewX(-2deg); }
+  40%     { transform:scaleX(1.07) scaleY(.95) skewX(1.5deg); }
+  60%     { transform:scaleX(.92) scaleY(1.05) skewX(2deg); }
+  80%     { transform:scaleX(1.04) scaleY(.97) skewX(-1deg); }
+}
+.flame-inner {
+  position:absolute;
+  bottom:3px;
+  left:50%;
+  transform:translateX(-50%);
+  width:6px;
+  height:12px;
+  background:linear-gradient(180deg, rgba(255,255,220,.95) 0%, rgba(255,230,100,.9) 50%, rgba(255,160,40,.7) 100%);
+  border-radius:50% 50% 30% 30% / 60% 60% 40% 40%;
+  animation:flickerInner 1.1s ease-in-out infinite;
+  filter:blur(.2px);
+}
+@keyframes flickerInner {
+  0%,100% { transform:translateX(-50%) scaleX(1)   scaleY(1); }
+  30%     { transform:translateX(-50%) scaleX(.8)  scaleY(1.1); }
+  55%     { transform:translateX(-50%) scaleX(1.1) scaleY(.9); }
+  75%     { transform:translateX(-50%) scaleX(.85) scaleY(1.08); }
+}
+.flame-glow {
+  position:absolute;
+  bottom:-2px;
+  left:50%;
+  transform:translateX(-50%);
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,180,60,.35) 0%, rgba(255,100,40,.18) 40%, transparent 70%);
+  animation:glowPulse 1.6s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes glowPulse {
+  0%,100% { opacity:.7; transform:translateX(-50%) scale(1); }
+  50%     { opacity:1;  transform:translateX(-50%) scale(1.3); }
+}
+.flame-spark {
+  position:absolute;
+  width:3px; height:3px;
+  border-radius:50%;
+  background:rgba(255,240,160,.9);
+  pointer-events:none;
+}
+.flame-spark:nth-child(1) { top:-10px; left:2px; animation:sparkFloat1 1.8s ease-in-out infinite; }
+.flame-spark:nth-child(2) { top:-14px; left:8px; animation:sparkFloat2 2.1s ease-in-out .4s infinite; }
+.flame-spark:nth-child(3) { top:-8px; left:11px; animation:sparkFloat1 1.5s ease-in-out .7s infinite; }
+@keyframes sparkFloat1 { 0%{opacity:0;transform:translateY(0) scale(1)} 30%{opacity:.9} 100%{opacity:0;transform:translateY(-12px) scale(.2)} }
+@keyframes sparkFloat2 { 0%{opacity:0;transform:translateY(0) scale(1)} 30%{opacity:.7} 100%{opacity:0;transform:translateY(-16px) scale(.2)} }
+
+.cake-wish-text {
+  font-family:var(--hand);
+  font-size:clamp(.95rem, 3.8vw, 1.15rem);
+  color:rgba(255,200,90,.75);
+  letter-spacing:.5px;
+  text-align:center;
+  margin-top:.85rem;
+  opacity:0;
+  animation:wishTextIn .8s ease 4.1s forwards;
+  position:relative;
+  z-index:2;
+}
+@keyframes wishTextIn { from { opacity:0; transform:translateY(8px); } to   { opacity:1; transform:translateY(0); } }
 
 /* ════ PLAYER CARD ════ */
 .player-card {
@@ -128,7 +363,6 @@ button { cursor:pointer; font-family:var(--ui); }
 }
 .player-card.playing::before { opacity:.25; }
 
-/* ════ 3D FLIP ════ */
 .flip-scene {
   width:100%; aspect-ratio:1/1; perspective:1000px; cursor:pointer;
   border-radius:var(--r) var(--r) 0 0; overflow:hidden; position:relative;
@@ -136,7 +370,7 @@ button { cursor:pointer; font-family:var(--ui); }
 .flip-scene::after {
   content:'Fotoğrafa dokun ✦'; position:absolute; bottom:10px; right:14px; z-index:5;
   font-size:.56rem; letter-spacing:1.5px; text-transform:uppercase;
-  color:rgba(255,255,255,.3); background:rgba(0,0,0,.45); padding:3px 9px; border-radius:99px;
+  color:rgba(255,255,255,3); background:rgba(0,0,0,.45); padding:3px 9px; border-radius:99px;
   pointer-events:none; transition:opacity .4s;
 }
 .flip-scene.flipped::after { opacity:0; }
@@ -183,7 +417,6 @@ button { cursor:pointer; font-family:var(--ui); }
 .pol-note { font-family:var(--hand); font-size:clamp(1.05rem,4.5vw,1.35rem); color:#3a3030; line-height:1.45; text-align:center; }
 .pol-date { font-family:var(--hand); font-size:.9rem; color:#9a8080; }
 
-/* ════ PLAYER BODY ════ */
 .player-body { padding:1.25rem 1.5rem 1.6rem; position:relative; z-index:2; }
 .track-meta { margin-bottom:1rem; }
 .track-meta h2 { font-size:1.1rem; font-weight:700; letter-spacing:.2px; }
@@ -224,9 +457,7 @@ button { cursor:pointer; font-family:var(--ui); }
 #ubtn { display:none; margin-top:.9rem; padding:.62rem 1.5rem; background:var(--red); border:none; border-radius:99px; color:#fff; font-size:.82rem; font-weight:600; box-shadow:0 4px 24px var(--red-glow); transition:transform .15s,box-shadow .2s; position:relative; z-index:1; }
 #ubtn:hover { transform:scale(1.06); }
 
-/* ════════════════════════════════════════════════
-   ZAMAN YOLCULUĞU — TIMELINE GALLERY
-════════════════════════════════════════════════ */
+/* ════ TIMELINE GALLERY ════ */
 .timeline {
   background:linear-gradient(160deg,#1a1212 0%,#100d0d 100%);
   border:1px solid rgba(255,200,90,.13);
@@ -243,8 +474,6 @@ button { cursor:pointer; font-family:var(--ui); }
   color:rgba(255,200,90,.75); font-weight:600; display:flex; align-items:center; gap:.45rem;
 }
 .tl-label i { font-size:.7rem; }
-
-/* ── Mood filter dots ── */
 .mood-filters { display:flex; gap:.55rem; align-items:center; }
 .mood-dot {
   width:18px; height:18px; border-radius:50%;
@@ -262,7 +491,6 @@ button { cursor:pointer; font-family:var(--ui); }
 .mood-ocean    { background:radial-gradient(circle at 40% 40%,#1a4a7a,#0a1a3a); color:#4a90d9; }
 .mood-gold     { background:radial-gradient(circle at 40% 40%,#b8860b,#5a3a00); color:#ffc85a; }
 
-/* ── Photo frame ── */
 .tl-frame {
   width:100%; aspect-ratio:4/3; border-radius:14px; overflow:hidden;
   position:relative; cursor:pointer; background:#0a0808;
@@ -287,7 +515,6 @@ button { cursor:pointer; font-family:var(--ui); }
 }
 @keyframes tapPulse { 0%,100%{opacity:.3} 50%{opacity:.7} }
 
-/* ── Hidden dots ── */
 .tl-dots { position:absolute; inset:0; z-index:4; pointer-events:none; }
 .glow-dot {
   position:absolute; width:16px; height:16px; border-radius:50%;
@@ -303,7 +530,6 @@ button { cursor:pointer; font-family:var(--ui); }
 @keyframes dotGlow { 0%,100%{box-shadow:0 0 6px rgba(255,200,90,.3)} 50%{box-shadow:0 0 16px rgba(255,200,90,.7)} }
 @keyframes dotRipple { 0%{transform:scale(1);opacity:.5} 100%{transform:scale(2.5);opacity:0} }
 
-/* ── N&M reveal ── */
 .nm-reveal {
   position:absolute; inset:0; z-index:8; display:flex; align-items:center; justify-content:center;
   border-radius:14px; background:rgba(10,6,6,.9); backdrop-filter:blur(5px);
@@ -329,7 +555,6 @@ button { cursor:pointer; font-family:var(--ui); }
 }
 .nm-close:hover { background:rgba(255,255,255,.22); }
 
-/* ── Handwritten note ── */
 .tl-note {
   font-family:var(--hand); font-size:clamp(1rem,4vw,1.2rem); color:rgba(255,255,255,.72);
   text-align:center; line-height:1.55; min-height:2.4rem; padding:0 .5rem;
@@ -337,7 +562,6 @@ button { cursor:pointer; font-family:var(--ui); }
 }
 .tl-note.fading { opacity:0; transform:translateY(7px); }
 
-/* ── Pip indicators ── */
 .tl-pips { display:flex; justify-content:center; gap:.45rem; margin-top:.75rem; }
 .tl-pip { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.18); transition:background .3s,transform .3s; cursor:pointer; }
 .tl-pip.active { background:rgba(255,200,90,.78); transform:scale(1.4); }
@@ -359,18 +583,15 @@ button { cursor:pointer; font-family:var(--ui); }
 @keyframes starSpin { 0%{transform:scale(0) rotate(-180deg)} 70%{transform:scale(1.2) rotate(10deg)} 100%{transform:scale(1) rotate(0)} }
 .wish-success p { font-family:var(--hand); font-size:1.05rem; color:rgba(255,200,90,.8); }
 
-/* ════ LOVE QUOTE ════ */
 .quote-wrap { text-align:center; padding:.25rem .6rem; }
 .quote-wrap p { font-family:var(--serif); font-style:italic; font-size:clamp(.83rem,3.3vw,.98rem); line-height:1.85; color:rgba(255,255,255,.45); }
 
-/* ════ SOS FAB ════ */
 #fab { position:fixed; bottom:22px; right:22px; z-index:450; width:62px; height:62px; background:var(--red); border:none; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; font-size:.01rem; box-shadow:0 8px 28px var(--red-glow); animation:fabRing 2.5s ease infinite; transition:transform .15s; }
 #fab:hover { transform:scale(1.1); }
 #fab i { font-size:1.4rem; line-height:1; }
 #fab span { font-size:.44rem; font-weight:700; letter-spacing:1.5px; margin-top:3px; }
 @keyframes fabRing { 0%{box-shadow:0 0 0 0 var(--red-glow)} 65%{box-shadow:0 0 0 18px rgba(255,71,87,0)} 100%{box-shadow:0 0 0 0 rgba(255,71,87,0)} }
 
-/* ════ SOS MODAL ════ */
 #overlay { display:none; position:fixed; inset:0; z-index:800; background:rgba(0,0,0,.72); backdrop-filter:blur(7px); align-items:flex-end; justify-content:center; padding:0 1rem 1.5rem; }
 #overlay.open { display:flex; }
 #modal { width:100%; max-width:430px; background:#1d1919; border:1px solid rgba(255,71,87,.22); border-radius:24px; padding:1.55rem 1.6rem 1.7rem; animation:mUp .38s cubic-bezier(.34,1.56,.64,1); box-shadow:0 -8px 70px rgba(0,0,0,.65); }
@@ -390,7 +611,6 @@ button { cursor:pointer; font-family:var(--ui); }
 .mcancel { padding:.72rem 1rem; background:rgba(255,255,255,.07); border:none; border-radius:13px; color:var(--gray); font-size:.84rem; transition:background .2s; }
 .mcancel:hover { background:rgba(255,255,255,.13); }
 
-/* ════ TOAST ════ */
 #toast { position:fixed; bottom:96px; left:50%; transform:translateX(-50%) translateY(10px); background:#232020; border:1px solid rgba(255,255,255,.1); border-radius:99px; padding:.55rem 1.25rem; font-size:.75rem; white-space:nowrap; opacity:0; transition:opacity .3s,transform .3s; z-index:900; pointer-events:none; max-width:calc(100vw - 2rem); overflow:hidden; text-overflow:ellipsis; }
 #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
@@ -403,9 +623,7 @@ button { cursor:pointer; font-family:var(--ui); }
 <canvas id="cvs"></canvas>
 <div id="greeting"></div>
 
-<!-- ════ INTRO ════ -->
-<div id="intro" role="button" tabindex="0"
-     onclick="startExp()" onkeydown="if(event.key==='Enter'||event.key===' ')startExp()">
+<div id="intro" role="button" tabindex="0" onclick="startExp()">
   <div class="intro-aurora"></div>
   <span class="intro-moon">🌙</span>
   <h1 class="intro-title">Doğum Günün Kutlu Olsun,<br>Nurçin.</h1>
@@ -413,39 +631,50 @@ button { cursor:pointer; font-family:var(--ui); }
   <span class="intro-cta">Ekrana dokun &nbsp;❤</span>
 </div>
 
-<!-- ════ APP ════ -->
 <div id="app" aria-hidden="true">
   <div class="col">
+    <div class="cake-scene">
+      <span class="cake-label">✦ İyi ki doğdun ✦</span>
+      <div class="cake-stage">
+        <div class="cake-flame">
+          <span class="flame-spark"></span><span class="flame-spark"></span><span class="flame-spark"></span>
+          <div class="flame-outer"><div class="flame-inner"></div></div>
+          <div class="flame-glow"></div>
+        </div>
+        <div class="cake-candle"><div class="candle-wick"></div><div class="candle-body"></div></div>
+        <div class="cake-cream">
+          <div class="cake-rosettes"><div class="rosette"></div><div class="rosette"></div><div class="rosette"></div><div class="rosette"></div><div class="rosette"></div></div>
+          <div class="cake-cream-flat"></div>
+          <svg class="cake-cream-drips" viewBox="0 0 168 18" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,0 Q10,0 14,10 Q18,18 22,18 Q26,18 28,10 Q32,0 40,0 Q50,0 54,12 Q58,18 63,18 Q68,18 70,12 Q74,0 84,0 Q94,0 96,14 Q98,18 103,18 Q108,18 110,14 Q112,0 122,0 Q132,0 134,10 Q136,18 141,18 Q146,18 148,10 Q150,0 168,0 L168,0 L0,0 Z" fill="#f0ece2" opacity="0.92"/>
+          </svg>
+        </div>
+        <div class="cake-sponge"></div>
+      </div>
+      <p class="cake-wish-text">6 Mayıs — Nurçin ♡</p>
+    </div>
 
-    <!-- ── PLAYER CARD (unchanged, static) ── -->
     <div class="player-card" id="playerCard">
-      <div class="flip-scene" id="flipScene" role="button" tabindex="0"
-           aria-label="Fotoğrafı çevir" onkeydown="if(event.key==='Enter')flipCard()">
+      <div class="flip-scene" id="flipScene" role="button" tabindex="0">
         <div class="flip-inner" id="flipInner">
-          <!-- FRONT: kapak.jpg -->
           <div class="flip-front" onclick="flipCard()">
             <div class="art-blur"></div>
             <div class="art-fg">
-              <img id="coverImg" src="kapak.jpg" alt="Araftayım — Ebru Gündeş"
-                   onerror="this.parentElement.innerHTML='<div class=art-placeholder>🎵</div>'">
+              <img id="coverImg" src="kapak.jpg" alt="Araftayım — Ebru Gündeş" onerror="this.parentElement.innerHTML='<div class=art-placeholder>🎵</div>'">
             </div>
           </div>
-          <!-- BACK: cocukluk.jpg -->
           <div class="flip-back">
             <div class="polaroid" onclick="flipCard()">
               <div class="pol-tape"></div>
               <div class="pol-img">
-                <button class="voice-btn" id="voiceBtn" onclick="toggleVoice(event)" aria-label="Ses anısını dinle">
-                  <i class="fas fa-volume-high" id="voiceIcon"></i>
-                </button>
+                <button class="voice-btn" id="voiceBtn" onclick="toggleVoice(event)"><i class="fas fa-volume-high" id="voiceIcon"></i></button>
               </div>
               <p class="pol-note">"Seni seviyorum,<br>dünden çok, yarından az."</p>
-              <span class="pol-date">6 Mayıs 2025 &nbsp;♡</span>
+              <span class="pol-date">6 Mayıs 2026 &nbsp;♡</span>
             </div>
           </div>
         </div>
       </div>
-
       <div class="player-body">
         <div class="track-meta"><h2>Araftayım</h2><p>Ebru Gündeş</p></div>
         <div class="prog">
@@ -453,23 +682,21 @@ button { cursor:pointer; font-family:var(--ui); }
           <div class="ptimes"><span id="tcur">1:01</span><span id="tdur">0:00</span></div>
         </div>
         <div class="ctrl">
-          <button class="skp" onclick="seekRel(-10)" aria-label="10 saniye geri"><i class="fas fa-rotate-left"></i></button>
-          <button class="pbtn" id="pbtn" aria-label="Oynat / Durdur"><i class="fas fa-play" id="picon"></i></button>
-          <button class="skp" onclick="seekRel(10)" aria-label="10 saniye ileri"><i class="fas fa-rotate-right"></i></button>
+          <button class="skp" onclick="seekRel(-10)"><i class="fas fa-rotate-left"></i></button>
+          <button class="pbtn" id="pbtn"><i class="fas fa-play" id="picon"></i></button>
+          <button class="skp" onclick="seekRel(10)"><i class="fas fa-rotate-right"></i></button>
         </div>
       </div>
     </div>
 
-    <!-- ── HEARTBEAT CARD ── -->
     <div class="hb-card">
-      <button class="hb-btn" id="hbtn" aria-label="Kalp atışı"><i class="fas fa-heart"></i></button>
+      <button class="hb-btn" id="hbtn"><i class="fas fa-heart"></i></button>
       <div class="hb-txt">
         <h4>Kalp Atışı</h4>
         <p>Her dokunuşunda kalbim seninle atıyor.<br>Seninle her an özel. ❤</p>
       </div>
     </div>
 
-    <!-- ── TIME CAPSULE ── -->
     <div class="capsule">
       <div class="cap-label">⏳ Zaman Kapsülü</div>
       <div id="tval">Yükleniyor…</div>
@@ -477,509 +704,207 @@ button { cursor:pointer; font-family:var(--ui); }
       <button id="ubtn" onclick="playFuture()">Gizli Mesajı Dinle 🔓</button>
     </div>
 
-    <!-- ════════════════════════════════════════════════
-         ZAMAN YOLCULUĞU — TIMELINE GALLERY
-    ════════════════════════════════════════════════ -->
     <div class="timeline" id="tlGallery">
       <div class="tl-header">
         <div class="tl-label"><i class="fas fa-camera-retro"></i> Zaman Yolculuğu</div>
-        <!-- Feature 2: Mood Filter -->
         <div class="mood-filters">
-          <div class="mood-dot mood-midnight" title="Midnight Red"  onclick="setMood('midnight',this)"></div>
-          <div class="mood-dot mood-ocean"    title="Ocean Blue"    onclick="setMood('ocean',this)"></div>
-          <div class="mood-dot mood-gold"     title="Soft Gold"     onclick="setMood('gold',this)"></div>
+          <div class="mood-dot mood-midnight" onclick="setMood('midnight',this)"></div>
+          <div class="mood-dot mood-ocean" onclick="setMood('ocean',this)"></div>
+          <div class="mood-dot mood-gold" onclick="setMood('gold',this)"></div>
         </div>
       </div>
-
       <div class="tl-frame" id="tlFrame" onclick="nextPhoto()">
-        <img class="tl-img fade-in" id="tlImg" src="1.jpg" alt="Anı fotoğrafı"
-             onerror="this.style.objectFit='contain';this.style.opacity='.15'">
+        <img class="tl-img fade-in" id="tlImg" src="1.jpg" alt="Anı fotoğrafı" onerror="this.style.opacity='.15'">
         <span class="tl-counter" id="tlCounter">1 / 5</span>
         <span class="tl-tap-hint">Dokun ✦</span>
-
-        <!-- Feature 3: 4 hidden glowing dots (positioned by %) -->
         <div class="tl-dots">
-          <div class="glow-dot" style="top:18%;left:15%"   data-i="0" onmousedown="dotHit(0,event)" ontouchstart="dotHit(0,event)"></div>
-          <div class="glow-dot" style="top:18%;right:15%"  data-i="1" onmousedown="dotHit(1,event)" ontouchstart="dotHit(1,event)"></div>
-          <div class="glow-dot" style="bottom:18%;left:15%"  data-i="2" onmousedown="dotHit(2,event)" ontouchstart="dotHit(2,event)"></div>
-          <div class="glow-dot" style="bottom:18%;right:15%" data-i="3" onmousedown="dotHit(3,event)" ontouchstart="dotHit(3,event)"></div>
+          <div class="glow-dot" style="top:18%;left:15%" data-i="0" onmousedown="dotHit(0,event)"></div>
+          <div class="glow-dot" style="top:18%;right:15%" data-i="1" onmousedown="dotHit(1,event)"></div>
+          <div class="glow-dot" style="bottom:18%;left:15%" data-i="2" onmousedown="dotHit(2,event)"></div>
+          <div class="glow-dot" style="bottom:18%;right:15%" data-i="3" onmousedown="dotHit(3,event)"></div>
         </div>
-
-        <!-- N & M reveal overlay -->
         <div class="nm-reveal" id="nmReveal">
-          <button class="nm-close" onclick="closeNM(event)" aria-label="Kapat"><i class="fas fa-xmark"></i></button>
+          <button class="nm-close" onclick="closeNM(event)"><i class="fas fa-xmark"></i></button>
           <span class="nm-text">BÜCÜRÜM :)</span>
         </div>
       </div>
-
-      <!-- Handwritten note per photo -->
       <p class="tl-note" id="tlNote">İlk gülüşün…</p>
-
-      <!-- Pip dots -->
       <div class="tl-pips" id="tlPips">
         <div class="tl-pip active" onclick="goToPhoto(0)"></div>
-        <div class="tl-pip"        onclick="goToPhoto(1)"></div>
-        <div class="tl-pip"        onclick="goToPhoto(2)"></div>
-        <div class="tl-pip"        onclick="goToPhoto(3)"></div>
-        <div class="tl-pip"        onclick="goToPhoto(4)"></div>
+        <div class="tl-pip" onclick="goToPhoto(1)"></div>
+        <div class="tl-pip" onclick="goToPhoto(2)"></div>
+        <div class="tl-pip" onclick="goToPhoto(3)"></div>
+        <div class="tl-pip" onclick="goToPhoto(4)"></div>
       </div>
     </div>
 
-    <!-- ── WISH BOX ── -->
     <div class="wish-box">
       <div class="wish-label"><i class="fas fa-star"></i> Dilek Kutusu</div>
       <div id="wishForm">
-        <textarea class="wish-input" id="wishInput"
-                  placeholder="Bir dileğini fısılda, yıldızlara gönderelim… ✨"></textarea>
-        <button class="wish-send" id="wishSendBtn" onclick="sendWish()">
-          Yıldızlara Gönder &nbsp;✦
-        </button>
+        <textarea class="wish-input" id="wishInput" placeholder="Bir dileğini fısılda, yıldızlara gönderelim… ✨"></textarea>
+        <button class="wish-send" id="wishSendBtn" onclick="sendWish()">Yıldızlara Gönder &nbsp;✦</button>
       </div>
-      <div class="wish-success" id="wishSuccess">
-        <span class="ws-star">⭐</span>
-        <p>Dileğin yıldızlara karıştı…</p>
-      </div>
+      <div class="wish-success" id="wishSuccess"><span class="ws-star">⭐</span><p>Dileğin yıldızlara karıştı…</p></div>
     </div>
 
-    <!-- LOVE QUOTE -->
     <div class="quote-wrap">
       <p>"Sen benim hem yolumsun hem de o yolun sonundaki huzurum. Hep yanımda, hep sol yanımda ol."</p>
     </div>
-
   </div>
 </div>
 
-<!-- SOS FAB -->
-<button id="fab" onclick="openSOS()" aria-label="Bana ulaş">
-  <i class="fas fa-life-ring"></i><span>YARDIM</span>
-</button>
-
-<!-- SOS MODAL -->
-<div id="overlay" onclick="bgClick(event)" role="dialog" aria-modal="true">
+<button id="fab" onclick="openSOS()"><i class="fas fa-life-ring"></i><span>YARDIM</span></button>
+<div id="overlay" onclick="bgClick(event)">
   <div id="modal">
-    <div class="mhdr">
-      <h3><i class="fas fa-paper-plane" style="font-size:.85rem"></i> Bana Ulaş</h3>
-      <button class="mx" onclick="closeSOS()" aria-label="Kapat"><i class="fas fa-xmark"></i></button>
-    </div>
-    <p class="msub">Aklında takılan, kalbinde biriken bir şey mi var? Bu alan tamamen sana ait — mesajın doğruca bana ulaşır. ✉</p>
+    <div class="mhdr"><h3><i class="fas fa-paper-plane"></i> Bana Ulaş</h3><button class="mx" onclick="closeSOS()"><i class="fas fa-xmark"></i></button></div>
+    <p class="msub">Aklında takılan bir şey mi var? Mesajın doğruca bana ulaşır. ✉</p>
     <textarea id="mta" placeholder="Buraya yaz, dinliyorum…"></textarea>
-    <div class="mbtns">
-      <button id="sbtn" onclick="sendMsg()">Gönder</button>
-      <button class="mcancel" onclick="closeSOS()">Kapat</button>
-    </div>
+    <div class="mbtns"><button id="sbtn" onclick="sendMsg()">Gönder</button><button class="mcancel" onclick="closeSOS()">Kapat</button></div>
   </div>
 </div>
+<div id="toast"></div>
 
-<div id="toast" role="status" aria-live="polite"></div>
-
-<!-- AUDIO -->
-<audio id="amain"   src="araftayim.mp3" preload="metadata"></audio>
-<audio id="awelc"   src="karsilama.mp3" preload="auto"></audio>
-<audio id="afuture" src="gelecek.mp3"   preload="none"></audio>
-<audio id="ahatira" src="hatira.mp3"    preload="none"></audio>
+<audio id="amain" src="araftayim.mp3" preload="metadata"></audio>
+<audio id="awelc" src="karsilama.mp3" preload="auto"></audio>
+<audio id="afuture" src="gelecek.mp3" preload="none"></audio>
+<audio id="ahatira" src="hatira.mp3" preload="none"></audio>
 
 <script>
-/* ── DEV SECRET ── */
-console.log('%c❤ Nurçin ❤','font-size:28px;color:#ff4757;font-family:serif;');
-console.log('%cBuraya kadar geldin demek.','font-size:14px;color:#b3b3b3;font-style:italic;');
-console.log('%c"Seninle olmak, evreni kıyısından izlemek değil — tam ortasında durmak gibi."','font-size:13px;color:#ff4757;font-style:italic;');
-
-/* ══════════════════════════════════════════
-   CANVAS — STARS + SHOOTS + WISH STARS
-══════════════════════════════════════════ */
 (function(){
   const cv=document.getElementById('cvs'), cx=cv.getContext('2d');
   let stars=[],shoots=[],wishStars=[];
-
   function resize(){ cv.width=innerWidth; cv.height=innerHeight; }
-
   function makeStars(){
-    stars=[];
-    const n=Math.floor(cv.width*cv.height/6000);
-    for(let i=0;i<n;i++) stars.push({
-      x:Math.random()*cv.width, y:Math.random()*cv.height,
-      r:Math.random()*1.5+.15, base:Math.random()*.38+.05,
-      ph:Math.random()*Math.PI*2, sp:Math.random()*.65+.3
-    });
+    stars=[]; const n=Math.floor(cv.width*cv.height/6000);
+    for(let i=0;i<n;i++) stars.push({x:Math.random()*cv.width, y:Math.random()*cv.height, r:Math.random()*1.5+.15, base:Math.random()*.38+.05, ph:Math.random()*Math.PI*2, sp:Math.random()*.65+.3});
   }
-
   function spawnShoot(){
     const x0=Math.random()*cv.width*.55, y0=Math.random()*cv.height*.45;
     const a=Math.PI/5+Math.random()*.4, sp=6+Math.random()*5;
     shoots.push({x:x0,y:y0,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,len:110+Math.random()*80,life:1,decay:.02+Math.random()*.012});
     setTimeout(spawnShoot, 3800+Math.random()*7000);
   }
-
-  /* Public: called from wish send */
-  window.addWishStar=function(){
-    wishStars.push({
-      x:Math.random()*cv.width, y:Math.random()*cv.height*.55,
-      r:3+Math.random()*2, twinkleSpeed:1.4+Math.random()*.8, birth:performance.now()
-    });
-  };
-
+  window.addWishStar=function(){ wishStars.push({x:Math.random()*cv.width, y:Math.random()*cv.height*.55, r:3+Math.random()*2, twinkleSpeed:1.4+Math.random()*.8, birth:performance.now()}); };
   function frame(ts){
-    cx.clearRect(0,0,cv.width,cv.height);
-    const t=ts*.001;
-    for(const s of stars){
-      const o=s.base+Math.sin(t*s.sp+s.ph)*s.base*.9;
-      cx.beginPath(); cx.arc(s.x,s.y,s.r,0,Math.PI*2);
-      cx.fillStyle=`rgba(255,255,255,${o.toFixed(3)})`; cx.fill();
-    }
+    cx.clearRect(0,0,cv.width,cv.height); const t=ts*.001;
+    for(const s of stars){ cx.beginPath(); cx.arc(s.x,s.y,s.r,0,Math.PI*2); cx.fillStyle=`rgba(255,255,255,${(s.base+Math.sin(t*s.sp+s.ph)*s.base*.9).toFixed(3)})`; cx.fill(); }
     for(let i=shoots.length-1;i>=0;i--){
-      const sh=shoots[i];
-      sh.x+=sh.vx; sh.y+=sh.vy; sh.life-=sh.decay;
-      if(sh.life<=0||sh.x>cv.width+100||sh.y>cv.height+100){ shoots.splice(i,1); continue; }
-      const steps=sh.len/Math.hypot(sh.vx,sh.vy);
-      const g=cx.createLinearGradient(sh.x-sh.vx*steps,sh.y-sh.vy*steps,sh.x,sh.y);
-      g.addColorStop(0,'rgba(255,255,255,0)');
-      g.addColorStop(.5,`rgba(255,235,200,${(sh.life*.45).toFixed(3)})`);
-      g.addColorStop(1,`rgba(255,255,255,${sh.life.toFixed(3)})`);
-      cx.beginPath(); cx.moveTo(sh.x-sh.vx*steps,sh.y-sh.vy*steps); cx.lineTo(sh.x,sh.y);
-      cx.strokeStyle=g; cx.lineWidth=2; cx.lineCap='round'; cx.stroke();
-      const hg=cx.createRadialGradient(sh.x,sh.y,0,sh.x,sh.y,6);
-      hg.addColorStop(0,`rgba(255,255,240,${sh.life.toFixed(3)})`); hg.addColorStop(1,'rgba(255,255,240,0)');
-      cx.beginPath(); cx.arc(sh.x,sh.y,6,0,Math.PI*2); cx.fillStyle=hg; cx.fill();
+      const sh=shoots[i]; sh.x+=sh.vx; sh.y+=sh.vy; sh.life-=sh.decay;
+      if(sh.life<=0){ shoots.splice(i,1); continue; }
+      cx.beginPath(); cx.moveTo(sh.x-sh.vx*(sh.len/Math.hypot(sh.vx,sh.vy)),sh.y-sh.vy*(sh.len/Math.hypot(sh.vx,sh.vy))); cx.lineTo(sh.x,sh.y);
+      cx.strokeStyle=`rgba(255,255,255,${sh.life})`; cx.lineWidth=2; cx.stroke();
     }
     for(const ws of wishStars){
-      const age=(ts-ws.birth)*.001;
-      const sc=Math.min(1,age/1.5);
-      const tw=.55+.45*Math.sin(t*ws.twinkleSpeed+ws.birth);
-      const op=sc*tw;
-      const gw=cx.createRadialGradient(ws.x,ws.y,0,ws.x,ws.y,ws.r*4);
-      gw.addColorStop(0,`rgba(255,220,100,${(op*.55).toFixed(3)})`); gw.addColorStop(1,'rgba(255,220,100,0)');
-      cx.beginPath(); cx.arc(ws.x,ws.y,ws.r*4,0,Math.PI*2); cx.fillStyle=gw; cx.fill();
-      cx.beginPath(); cx.arc(ws.x,ws.y,ws.r*sc,0,Math.PI*2);
-      cx.fillStyle=`rgba(255,240,160,${op.toFixed(3)})`; cx.fill();
-      cx.save(); cx.translate(ws.x,ws.y); cx.rotate(t*.3+ws.birth);
-      cx.strokeStyle=`rgba(255,255,200,${(op*.6).toFixed(3)})`; cx.lineWidth=1;
-      const sp2=ws.r*2.2*sc;
-      [[sp2,0],[-sp2,0],[0,sp2],[0,-sp2]].forEach(([dx,dy])=>{ cx.beginPath(); cx.moveTo(0,0); cx.lineTo(dx,dy); cx.stroke(); });
-      cx.restore();
+      const op=Math.min(1,(ts-ws.birth)*.001/1.5)*(.55+.45*Math.sin(t*ws.twinkleSpeed+ws.birth));
+      cx.beginPath(); cx.arc(ws.x,ws.y,ws.r,0,Math.PI*2); cx.fillStyle=`rgba(255,240,160,${op})`; cx.fill();
     }
     requestAnimationFrame(frame);
   }
-
-  window.addEventListener('resize',()=>{ resize(); makeStars(); });
-  resize(); makeStars(); requestAnimationFrame(frame);
-  setTimeout(spawnShoot,2500);
-  window.addEventListener('mousemove',e=>{
-    const mx=(e.clientX/innerWidth-.5)*.3, my=(e.clientY/innerHeight-.5)*.3;
-    for(const s of stars){ s.x+=mx*s.r; s.y+=my*s.r; }
-  },{passive:true});
+  window.addEventListener('resize',()=>{ resize(); makeStars(); }); resize(); makeStars(); requestAnimationFrame(frame); spawnShoot();
 })();
 
-/* ══════════════════════════════════════════
-   GREETING
-══════════════════════════════════════════ */
 function setGreeting(){
   const h=new Date().getHours();
-  const msg=h>=5&&h<12?'☀️ Günaydın Güzelim — bugün özel bir gün!':
-            h>=12&&h<18?'🌤 Tünaydın Tatlım ':
-            h>=18&&h<22?'🌇 İyi akşamlar Canım':
-                        '🌙 İyi geceler Balım — Doğum Günün Kutlu Olsun!';
-  const el=document.getElementById('greeting');
-  el.textContent=msg; el.classList.add('show');
+  const msg=h>=5&&h<12?'☀️ Günaydın Güzelim — bugün senin günün!': h>=12&&h<18?'🌤 Tünaydın Tatlım — iyi ki varsın': h>=18&&h<22?'🌇 İyi akşamlar Canım': '🌙 İyi geceler Balım — Doğum Günün Kutlu Olsun!';
+  const el=document.getElementById('greeting'); el.textContent=msg; el.classList.add('show');
 }
 
-/* ══════════════════════════════════════════
-   HEART RAIN
-══════════════════════════════════════════ */
-const HEARTS=['❤️','🩷','💕','💖','💗','💓','✨','🌸'];
 function spawnHeart(){
   const el=document.createElement('span'); el.className='h-rain';
-  el.textContent=HEARTS[Math.floor(Math.random()*HEARTS.length)];
-  el.style.left=(Math.random()*96)+'vw';
-  const dur=3+Math.random()*3;
-  el.style.animationDuration=dur+'s';
-  el.style.fontSize=(.8+Math.random()*.9)+'rem';
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),dur*1000+200);
+  el.textContent=['❤️','💕','💖','✨'][Math.floor(Math.random()*4)];
+  el.style.left=(Math.random()*96)+'vw'; el.style.animationDuration=(3+Math.random()*3)+'s';
+  document.body.appendChild(el); setTimeout(()=>el.remove(),6200);
 }
-function heartRain(count=25){ for(let i=0;i<count;i++) setTimeout(spawnHeart,i*80); }
+function heartRain(n=25){ for(let i=0;i<n;i++) setTimeout(spawnHeart,i*80); }
 
-/* ══════════════════════════════════════════
-   INTRO
-══════════════════════════════════════════ */
 function startExp(){
   document.getElementById('intro').classList.add('out');
   setTimeout(()=>{
     document.getElementById('intro').style.display='none';
-    const app=document.getElementById('app');
-    app.removeAttribute('aria-hidden'); app.classList.add('show');
+    document.getElementById('app').classList.add('show');
     document.getElementById('awelc').play().catch(()=>{});
     setGreeting(); heartRain(30);
   },2200);
   startCd();
 }
 
-/* ══════════════════════════════════════════
-   3D FLIP
-══════════════════════════════════════════ */
 let flipped=false;
-function flipCard(){
-  flipped=!flipped;
-  document.getElementById('flipScene').classList.toggle('flipped',flipped);
-  if(!flipped) stopVoice();
-}
+function flipCard(){ flipped=!flipped; document.getElementById('flipScene').classList.toggle('flipped',flipped); if(!flipped) stopVoice(); }
 
-/* ══════════════════════════════════════════
-   AUDIO PLAYER — 61s first play
-══════════════════════════════════════════ */
 const audio=document.getElementById('amain');
 const pbtn=document.getElementById('pbtn');
-const picon=document.getElementById('picon');
-const pfill=document.getElementById('pfill');
-const ptrack=document.getElementById('ptrack');
-const card=document.getElementById('playerCard');
 let firstPlay=true;
+pbtn.onclick=()=>{
+  if(audio.paused){ if(firstPlay){audio.currentTime=61; firstPlay=false;} audio.play(); document.getElementById('picon').className='fas fa-pause'; document.getElementById('playerCard').classList.add('playing'); }
+  else { audio.pause(); document.getElementById('picon').className='fas fa-play'; document.getElementById('playerCard').classList.remove('playing'); }
+};
+audio.ontimeupdate=()=>{ document.getElementById('pfill').style.width=(audio.currentTime/audio.duration*100)+'%'; document.getElementById('tcur').textContent=Math.floor(audio.currentTime/60)+':'+String(Math.floor(audio.currentTime%60)).padStart(2,'0'); };
+audio.onloadedmetadata=()=>{ document.getElementById('tdur').textContent=Math.floor(audio.duration/60)+':'+String(Math.floor(audio.duration%60)).padStart(2,'0'); };
 
-pbtn.addEventListener('click',togglePlay);
-function togglePlay(){
-  if(audio.paused){
-    if(firstPlay){ audio.currentTime=61; firstPlay=false; }
-    audio.play();
-    picon.className='fas fa-pause'; pbtn.classList.add('on'); card.classList.add('playing');
-  } else {
-    audio.pause();
-    picon.className='fas fa-play'; pbtn.classList.remove('on'); card.classList.remove('playing');
-  }
-}
-audio.addEventListener('timeupdate',()=>{
-  if(!audio.duration) return;
-  pfill.style.width=(audio.currentTime/audio.duration*100)+'%';
-  document.getElementById('tcur').textContent=fmt(audio.currentTime);
-});
-audio.addEventListener('loadedmetadata',()=>{
-  document.getElementById('tdur').textContent=fmt(audio.duration);
-  document.getElementById('tcur').textContent=fmt(61);
-  pfill.style.width=(61/audio.duration*100)+'%';
-});
-audio.addEventListener('ended',()=>{
-  picon.className='fas fa-play'; pbtn.classList.remove('on'); card.classList.remove('playing');
-  pfill.style.width='0%'; firstPlay=true;
-});
-ptrack.addEventListener('click',e=>{
-  const r=ptrack.getBoundingClientRect();
-  audio.currentTime=((e.clientX-r.left)/r.width)*(audio.duration||0);
-  firstPlay=false;
-});
-function seekRel(s){ audio.currentTime=Math.max(0,Math.min(audio.duration||0,audio.currentTime+s)); firstPlay=false; }
-function fmt(s){ return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0'); }
+function seekRel(s){ audio.currentTime+=s; firstPlay=false; }
 
-/* ══════════════════════════════════════════
-   VOICE MEMORY
-══════════════════════════════════════════ */
-const voiceAudio=document.getElementById('ahatira');
-const voiceBtn=document.getElementById('voiceBtn');
-const voiceIcon=document.getElementById('voiceIcon');
-function toggleVoice(e){
-  e.stopPropagation();
-  if(voiceAudio.paused){
-    voiceAudio.play().catch(()=>showToast('⚠️ Ses dosyası yüklenemedi.'));
-    voiceBtn.classList.add('playing-voice'); voiceIcon.className='fas fa-volume-xmark';
-    showToast('🎙 Ses anısı oynatılıyor…');
-  } else stopVoice();
-}
-function stopVoice(){
-  voiceAudio.pause(); voiceAudio.currentTime=0;
-  voiceBtn.classList.remove('playing-voice'); voiceIcon.className='fas fa-volume-high';
-}
-voiceAudio.addEventListener('ended',stopVoice);
+const vAud=document.getElementById('ahatira');
+function toggleVoice(e){ e.stopPropagation(); if(vAud.paused){vAud.play(); document.getElementById('voiceBtn').classList.add('playing-voice');} else stopVoice(); }
+function stopVoice(){ vAud.pause(); vAud.currentTime=0; document.getElementById('voiceBtn').classList.remove('playing-voice'); }
 
-/* ══════════════════════════════════════════
-   TIMELINE GALLERY
-══════════════════════════════════════════ */
-
-/* ── EDIT THESE TEXTS — one note per photo ──────────────────────── */
-const PHOTO_NOTES=[
-  'Çocukluğuna ayrı aşık oldum.',                                  // 1.jpg
-  'Bak burada ne kadar küçüksün…',                  // 2.jpg
-  'Gülüşünün sebebi nedir ki?',                 // 3.jpg
-  'Tam bu anda ne düşünüyordun acaba?',             // 4.jpg
-  'İstanbul Hanımefendisi',       // 5.jpg
-];
-/* ─────────────────────────────────────────────────────────────── */
-
-const PHOTO_COUNT=5;
-let tlIdx=0, tlBusy=false;
-
-function updatePips(){
-  document.querySelectorAll('.tl-pip').forEach((p,i)=>p.classList.toggle('active',i===tlIdx));
-}
-
+const PHOTO_NOTES=['Çocukluğuna ayrı aşık oldum.','Bak burada ne kadar küçüksün…','Gülüşünün sebebi nedir ki?','Tam bu anda ne düşünüyordun acaba?','İstanbul Hanımefendisi'];
+let tlIdx=0;
 function goToPhoto(idx){
-  if(tlBusy||idx===tlIdx) return;
-  const img=document.getElementById('tlImg');
-  const note=document.getElementById('tlNote');
-  tlBusy=true;
-  img.classList.remove('fade-in'); img.classList.add('fade-out');
-  note.classList.add('fading');
+  const img=document.getElementById('tlImg'); const note=document.getElementById('tlNote');
+  img.classList.add('fade-out'); note.classList.add('fading');
   setTimeout(()=>{
-    tlIdx=idx;
-    img.src=(tlIdx+1)+'.jpg';
-    document.getElementById('tlCounter').textContent=(tlIdx+1)+' / '+PHOTO_COUNT;
-    note.textContent=PHOTO_NOTES[tlIdx];
-    img.classList.remove('fade-out'); img.classList.add('fade-in');
-    note.classList.remove('fading');
-    updatePips(); tlBusy=false;
+    tlIdx=idx; img.src=(tlIdx+1)+'.jpg'; note.textContent=PHOTO_NOTES[tlIdx];
+    document.getElementById('tlCounter').textContent=(tlIdx+1)+' / 5';
+    img.classList.replace('fade-out','fade-in'); note.classList.remove('fading');
+    document.querySelectorAll('.tl-pip').forEach((p,i)=>p.classList.toggle('active',i===idx));
   },500);
 }
+function nextPhoto(){ if(!document.getElementById('nmReveal').classList.contains('show')) goToPhoto((tlIdx+1)%5); }
 
-function nextPhoto(){
-  if(document.getElementById('nmReveal').classList.contains('show')) return;
-  goToPhoto((tlIdx+1)%PHOTO_COUNT);
+function setMood(m,el){
+  const colors={midnight:'rgba(80,10,18,.18)', ocean:'rgba(10,30,70,.18)', gold:'rgba(80,50,0,.15)'};
+  document.documentElement.style.setProperty('--mood-tint', colors[m]);
+  document.querySelectorAll('.mood-dot').forEach(d=>d.classList.remove('active')); el.classList.add('active');
 }
 
-/* ══════════════════════════════════════════
-   FEATURE 2: MOOD FILTER
-══════════════════════════════════════════ */
-const MOODS={
-  midnight:'rgba(80,10,18,.18)',
-  ocean:   'rgba(10,30,70,.18)',
-  gold:    'rgba(80,50,0,.15)',
-};
-let activeMood=null;
-function setMood(name,el){
-  const dots=document.querySelectorAll('.mood-dot');
-  if(activeMood===name){
-    activeMood=null;
-    document.documentElement.style.setProperty('--mood-tint','transparent');
-    dots.forEach(d=>d.classList.remove('active'));
-  } else {
-    activeMood=name;
-    document.documentElement.style.setProperty('--mood-tint',MOODS[name]);
-    dots.forEach(d=>d.classList.remove('active'));
-    el.classList.add('active');
-    showToast('✨ Renk tonu uygulandı');
-  }
-}
-
-/* ══════════════════════════════════════════
-   FEATURE 3: HIDDEN 4-DOT MESSAGE
-══════════════════════════════════════════ */
-const hitDots=new Set();
-let nmResetTimer=null;
-
+let hitDots=new Set();
 function dotHit(i,e){
-  e.stopPropagation(); /* prevent nextPhoto */
-  const dotEl=document.querySelector(`.glow-dot[data-i="${i}"]`);
-  if(!dotEl||hitDots.has(i)) return;
-  dotEl.classList.add('hit');
-  hitDots.add(i);
-  clearTimeout(nmResetTimer);
-  if(hitDots.size===4){
-    document.getElementById('nmReveal').classList.add('show');
-    showToast('✨ Gizli mesaj bulundu!');
-    heartRain(14);
-  } else {
-    nmResetTimer=setTimeout(()=>{
-      hitDots.clear();
-      document.querySelectorAll('.glow-dot').forEach(d=>d.classList.remove('hit'));
-    },5000);
-  }
+  e.stopPropagation(); document.querySelectorAll('.glow-dot')[i].classList.add('hit'); hitDots.add(i);
+  if(hitDots.size===4){ document.getElementById('nmReveal').classList.add('show'); heartRain(15); }
 }
-
-function closeNM(e){
-  e.stopPropagation();
-  document.getElementById('nmReveal').classList.remove('show');
-  hitDots.clear();
-  document.querySelectorAll('.glow-dot').forEach(d=>d.classList.remove('hit'));
-}
-
-/* ══════════════════════════════════════════
-   FEATURE 4: RISING STAR FROM GALLERY + WISH BOX
-══════════════════════════════════════════ */
-function launchRisingStar(){
-  const gallery=document.getElementById('tlGallery');
-  const rect=gallery.getBoundingClientRect();
-  const el=document.createElement('span');
-  el.className='rising-star';
-  el.textContent='⭐';
-  el.style.left=(rect.left+rect.width/2)+'px';
-  el.style.top=(rect.top+rect.height/2)+'px';
-  document.body.appendChild(el);
-  /* After the star flies off-screen, add a permanent golden wish star to the canvas */
-  setTimeout(()=>{ el.remove(); addWishStar(); },2200);
-}
+function closeNM(e){ e.stopPropagation(); document.getElementById('nmReveal').classList.remove('show'); hitDots.clear(); document.querySelectorAll('.glow-dot').forEach(d=>d.classList.remove('hit')); }
 
 async function sendWish(){
-  const input=document.getElementById('wishInput');
-  const wish=input.value.trim();
-  if(!wish){ showToast('✨ Önce bir şeyler fısılda…'); return; }
-  const btn=document.getElementById('wishSendBtn');
-  btn.textContent='Gönderiliyor…'; btn.disabled=true;
-  try {
-    const fd=new FormData();
-    fd.append('mesaj','⭐ DİLEK: '+wish);
-    fd.append('_subject','⭐ Nurçin\'den Dilek!');
-    await fetch('https://formspree.io/f/xaqvqede',{method:'POST',body:fd,headers:{Accept:'application/json'}});
-  } catch(err){}
-  /* Always animate success */
-  launchRisingStar();
-  heartRain(10);
-  document.getElementById('wishForm').style.display='none';
-  const suc=document.getElementById('wishSuccess');
-  suc.style.display='block';
-  showToast('⭐ Dileğin yıldızlara karıştı!');
-  setTimeout(()=>{
-    suc.style.display='none';
-    document.getElementById('wishForm').style.display='block';
-    input.value='';
-    btn.textContent='Yıldızlara Gönder \u00a0✦';
-    btn.disabled=false;
-  },5000);
+  const val=document.getElementById('wishInput').value.trim();
+  if(!val) return;
+  document.getElementById('wishForm').style.display='none'; document.getElementById('wishSuccess').style.display='block';
+  addWishStar(); heartRain(10);
+  const fd=new FormData(); fd.append('mesaj','⭐ DİLEK: '+val);
+  fetch('https://formspree.io/f/xaqvqede',{method:'POST',body:fd});
 }
 
-/* ══════════════════════════════════════════
-   COUNTDOWN
-══════════════════════════════════════════ */
-function startCd(){ tick(); setInterval(tick,1000); }
-function tick(){
-  const diff=new Date('2026-10-28T00:00:00')-new Date();
-  const el=document.getElementById('tval');
-  if(diff<=0){
-    el.textContent=' 6. Ayımızı Doldurduğumuz zaman erişime açık olacak.';
-    document.getElementById('csub').textContent='Sürpriz mesajın hazır ✨';
-    document.getElementById('ubtn').style.display='block'; return;
-  }
-  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),
-        m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-  const seg=(v,u)=>`<span style="color:var(--white);font-weight:700">${v}</span><span style="color:var(--gray);font-size:.8rem"> ${u}&thinsp;</span>`;
-  el.innerHTML=seg(d,'g')+seg(h,'s')+seg(m,'d')+seg(s,'sn');
+function startCd(){
+  setInterval(()=>{
+    const diff=new Date('2026-10-28T00:00:00')-new Date();
+    if(diff<=0){ document.getElementById('tval').textContent='Erişime Açıldı!'; document.getElementById('ubtn').style.display='block'; return; }
+    const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+    document.getElementById('tval').innerHTML=`${d}g ${h}s ${m}d ${s}sn`;
+  },1000);
 }
-function playFuture(){ document.getElementById('afuture').play().catch(()=>{}); showToast('▶ Gizli mesaj oynatılıyor…'); }
+function playFuture(){ document.getElementById('afuture').play(); showToast('▶ Gizli mesaj oynatılıyor…'); }
 
-/* ══════════════════════════════════════════
-   SOS MODAL
-══════════════════════════════════════════ */
-function openSOS(){ document.getElementById('overlay').classList.add('open'); document.getElementById('mta').focus(); }
+function openSOS(){ document.getElementById('overlay').classList.add('open'); }
 function closeSOS(){ document.getElementById('overlay').classList.remove('open'); }
-function bgClick(e){ if(e.target===document.getElementById('overlay')) closeSOS(); }
+function bgClick(e){ if(e.target.id==='overlay') closeSOS(); }
+
 async function sendMsg(){
-  const msg=document.getElementById('mta').value.trim();
-  if(!msg){ showToast('✏️ Önce bir şeyler yaz…'); return; }
-  const btn=document.getElementById('sbtn');
-  btn.textContent='Gönderiliyor…'; btn.disabled=true;
-  try {
-    const fd=new FormData();
-    fd.append('mesaj',msg); fd.append('_subject','💌 Nurçin\'den Yeni Mesaj!');
-    const r=await fetch('https://formspree.io/f/xaqvqede',{method:'POST',body:fd,headers:{Accept:'application/json'}});
-    if(r.ok){ showToast('❤️ Mesajın bana ulaştı, Nurçin!'); heartRain(12); document.getElementById('mta').value=''; closeSOS(); }
-    else showToast('⚠️ Bağlantıda sorun var, tekrar dene.');
-  } catch{ showToast('⚠️ Bağlantı hatası oluştu.'); }
-  finally{ btn.textContent='Gönder'; btn.disabled=false; }
+  const m=document.getElementById('mta').value.trim(); if(!m) return;
+  const fd=new FormData(); fd.append('mesaj',m); fd.append('_subject','💌 Nurçin\'den Mesaj');
+  const r=await fetch('https://formspree.io/f/xaqvqede',{method:'POST',body:fd});
+  if(r.ok){ showToast('❤️ Mesajın bana ulaştı!'); document.getElementById('mta').value=''; closeSOS(); heartRain(10); }
 }
 
-/* ══════════════════════════════════════════
-   TOAST
-══════════════════════════════════════════ */
-let ttmr;
-function showToast(msg){
-  const el=document.getElementById('toast');
-  el.textContent=msg; el.classList.add('show');
-  clearTimeout(ttmr); ttmr=setTimeout(()=>el.classList.remove('show'),3400);
-}
+function showToast(m){ const el=document.getElementById('toast'); el.textContent=m; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),3000); }
 </script>
 </body>
 </html>
