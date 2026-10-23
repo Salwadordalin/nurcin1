@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>barışalım mı?</title>
+  <style>
+    :root {
+      --bg1: #120f1f;
+      --bg2: #221b36;
+      --panel: rgba(38, 31, 52, 0.72);
+      --panel-border: rgba(255,255,255,0.12);
+      --primary: #8b7cf6;
+      --primary-dark: #6c5ce7;
+      --pink: #f55ca8;
+      --pink-dark: #de3d8b;
+      --text: #f4f0ff;
+      --muted: #d7d1ea;
+      --success: #86efac;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top left, rgba(139,124,246,0.22), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(245,92,168,0.18), transparent 28%),
+        linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+      color: var(--text);
+      position: relative;
+    }
+
+    .glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .glow.one {
+      background: rgba(139,124,246,0.35);
+      top: 6%;
+      left: 12%;
+      animation: float 10s ease-in-out infinite alternate;
+    }
+
+    .glow.two {
+      background: rgba(245,92,168,0.25);
+      right: 10%;
+      bottom: 7%;
+      animation: float 12s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0px) scale(1); }
+      to { transform: translateY(30px) scale(1.12); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(92vw, 440px);
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 28px;
+      padding: 38px 28px 30px;
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .container::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent 40%);
+      pointer-events: none;
+    }
+
+    .container:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.42),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    #mesajMetni {
+      position: relative;
+      font-size: clamp(1.02rem, 2.4vw, 1.12rem);
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 28px;
+      min-height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+    }
+
+    .buttons {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      min-height: 62px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      appearance: none;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 26px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+
+    #evetBtn {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      box-shadow: 0 12px 25px rgba(108, 92, 231, 0.42);
+    }
+
+    #evetBtn:hover {
+      background: linear-gradient(135deg, #927ff7 0%, #5d4fcb 100%);
+    }
+
+    #hayirBtn {
+      background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dark) 100%);
+      color: white;
+      box-shadow: 0 12px 25px rgba(232, 67, 147, 0.35);
+    }
+
+    #hayirBtn:hover {
+      background: linear-gradient(135deg, #ff6dbb 0%, #e5378e 100%);
+    }
+
+    .success-box {
+      animation: fadeInUp 0.6s ease both;
+      display: grid;
+      place-items: center;
+      gap: 12px;
+      padding: 10px 8px 4px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .success-box h2 {
+      font-size: clamp(1.8rem, 4vw, 2.2rem);
+      color: #b4f7c8;
+      letter-spacing: 0.3px;
+    }
+
+    .success-box p {
+      color: #ebf8ef;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .heart-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      opacity: 0;
+      animation: showHearts 0.8s 0.2s ease forwards;
+    }
+
+    .heart {
+      font-size: 1.3rem;
+      animation: bounce 1.2s ease-in-out infinite alternate;
+    }
+
+    .heart:nth-child(2) { animation-delay: 0.2s; }
+    .heart:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      from { transform: translateY(0) scale(1); }
+      to { transform: translateY(-4px) scale(1.15); }
+    }
+
+    @keyframes showHearts {
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 420px) {
+      .container {
+        padding: 30px 20px 24px;
+      }
+
+      .buttons {
+        gap: 12px;
+      }
+
+      button {
+        flex: 1 1 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+
+  <div class="container" id="mainCard">
+    <p id="mesajMetni">selam hira. özledim valla, hatamın da farkındayım. bir daha aynı saçmalıkları yapmayacağıma söz veriyorum. bu siteyi de sırf bunun için hazırladım, uzatmayalım artık bence :)</p>
+
+    <div class="buttons" id="buttonArea">
+      <button id="evetBtn" onclick="evetTiklandi()">barışalım</button>
+      <button id="hayirBtn" onmouseover="hayirKacir()" onclick="hayirKacir()">hayır</button>
+    </div>
+  </div>
+
+  <script>
+    const hayirMesajlari = [
+      "emin misin?",
+      "yanlış tuşa basıyosun farkındasın değil mi",
+      "kaçabildiğin kadar kaç bakalım :)",
+      "yok ya, oyle hemen hayır yok",
+      "evet tuşu sol tarafta baksana bi",
+      "zorlama istersen evete bas",
+      "iyi madem, kaç bakalım",
+      "kaçış yok, basıcaksın evete",
+      "olmaz öyle şey, gel buraya",
+      "biraz daha düşün, bu kadar kolay olmaz"
+    ];
+
+    let tiklamaSayisi = 0;
+
+    function hayirKacir() {
+      tiklamaSayisi++;
+
+      const hayirBtn = document.getElementById('hayirBtn');
+      const mesaj = document.getElementById('mesajMetni');
+
+      const x = (Math.random() * 220) - 110;
+      const y = (Math.random() * 120) - 60;
+
+      hayirBtn.style.transform = `translate(${x}px, ${y}px)`;
+      hayirBtn.style.transition = "transform 0.2s ease";
+
+      const rastgeleMesaj = hayirMesajlari[Math.floor(Math.random() * hayirMesajlari.length)];
+      mesaj.innerText = rastgeleMesaj;
+
+      if (tiklamaSayisi > 5) {
+        hayirBtn.style.opacity = "0";
+        hayirBtn.style.pointerEvents = "none";
+        hayirBtn.style.transform = "scale(0.2)";
+      }
+    }
+
+    function evetTiklandi() {
+      const card = document.getElementById('mainCard');
+
+      card.innerHTML = `
+        <div class="success-box">
+          <h2>helal be :)</h2>
+          <p>en güzeli oldu, uzatmaya gerek yoktu zaten. görüşürüz birazdan.</p>
+          <div class="heart-row">
+            <span class="heart">💜</span>
+            <span class="heart">💗</span>
+            <span class="heart">💖</span>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
